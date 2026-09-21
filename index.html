@@ -208,6 +208,7 @@ class Component extends DCLogic {
           if (msg) { msg.textContent = 'Something went wrong. Please try again.'; }
         });
     });
+    if (this.isMobile()) { this.initMobile(); return; }
     let tries = 0;
     (function wait() {
       if (window.THREE && window.gsap && window.ScrollTrigger) {
@@ -305,6 +306,76 @@ class Component extends DCLogic {
       setTimeout(() => { intro.style.display = 'none'; }, 1100);
     }
     if (this._openInvitation) this._openInvitation(); else this._introDone = true;
+  }
+
+  isMobile() {
+    try { return window.matchMedia('(max-aspect-ratio: 1/1)').matches || window.innerWidth < 700; }
+    catch (_) { return (window.innerWidth || 1024) < 700; }
+  }
+
+  _mobilePanelHTML(dict, lang) {
+    const NAVY = '#3a2417';
+    const SFF = lang === 'vi' ? "'Cormorant Garamond',serif" : "'Pinyon Script',cursive";
+    const SFI = lang === 'vi' ? 'font-style:italic;' : '';
+    const diamond = '11 <span style="font-size:.4em;vertical-align:.3em;opacity:.7;">&#10022;</span> 11 <span style="font-size:.4em;vertical-align:.3em;opacity:.7;">&#10022;</span> 2026';
+    const rule = '<div style="display:flex;align-items:center;justify-content:center;gap:16px;margin:30px 0;"><span style="width:64px;height:1px;background:' + NAVY + ';opacity:.5;"></span><span style="font-size:22px;color:' + NAVY + ';opacity:.8;">&#10070;</span><span style="width:64px;height:1px;background:' + NAVY + ';opacity:.5;"></span></div>';
+    const row = (src, t, l) => '<div style="display:flex;align-items:center;gap:22px;text-align:left;width:100%;max-width:400px;"><img src="./assets/' + src + '" alt="" style="width:88px;height:88px;object-fit:contain;flex-shrink:0;"><div><div style="font-family:\'Cormorant Garamond\',serif;font-weight:500;font-size:clamp(28px,8vw,38px);line-height:1;color:' + NAVY + ';">' + t + '</div><div style="font-family:\'Cormorant Garamond\',serif;font-weight:400;font-size:clamp(20px,5.5vw,27px);line-height:1.15;margin-top:4px;color:' + NAVY + ';opacity:.85;">' + l + '</div></div></div>';
+    const rows = row('tl-arrive.png', '15:00', dict.ev.arrive) + row('tl-vows.png', '15:30', dict.ev.vows) + row('tl-reception.png', '17:00', dict.ev.reception) + row('tl-ceremony.png', '18:00', dict.ev.ceremony) + row('tl-party.png', '20:00', dict.ev.party);
+    const sw = (c1, c2, rot) => '<div style="width:74px;height:86px;border-radius:47% 53% 45% 55% / 40% 44% 56% 60%;background:radial-gradient(58% 52% at 44% 40%, ' + c1 + ' 0%, ' + c2 + ' 58%, rgba(255,255,255,0) 100%), radial-gradient(52% 58% at 62% 66%, ' + c1 + ' 0%, rgba(255,255,255,0) 82%);transform:rotate(' + rot + 'deg);opacity:.92;"></div>';
+    const swatches = sw('#a9c6dc', '#bcd4e6', -4) + sw('#e8bfb6', '#f0d2cb', -2) + sw('#7a2231', '#94303f', 3) + sw('#5c4433', '#71563f', -3) + sw('#b9c9a6', '#cdd9be', 4) + sw('#dcc389', '#e7d3a3', -3) + sw('#2b2b2b', '#454545', 2);
+    const p0 = '<div style="text-align:center;color:' + NAVY + ';font-family:\'Cormorant Garamond\',serif;max-width:560px;margin:0 auto;"><div style="font-family:\'Pinyon Script\',cursive;font-size:clamp(64px,21vw,120px);line-height:.95;">Khoa <span style="font-size:.66em;">&amp;</span> Thi</div>' + rule + '<div style="font-weight:400;font-size:clamp(21px,6vw,30px);line-height:1.3;">' + dict.invite + '</div><div style="font-weight:500;font-size:clamp(30px,9vw,46px);letter-spacing:.08em;margin-top:34px;">' + diamond + '</div><div style="font-weight:400;font-size:clamp(18px,5vw,26px);letter-spacing:.06em;margin-top:24px;">' + dict.at + '<br>SHERATON HANOI HOTEL</div><div style="font-weight:400;font-size:clamp(14px,3.8vw,18px);line-height:1.4;margin-top:14px;opacity:.8;">K5 Nghi T\u00e0m, 11 \u0111\u01b0\u1eddng Xu\u00e2n Di\u1ec7u,<br>ph\u01b0\u1eddng T\u00e2y H\u1ed3, H\u00e0 N\u1ed9i, Vi\u1ec7t Nam</div>' + rule + '</div>';
+    const p1 = '<div style="text-align:center;color:' + NAVY + ';max-width:520px;margin:0 auto;"><div style="font-family:\'Pinyon Script\',cursive;font-size:clamp(58px,18vw,116px);line-height:1;">' + dict.celebration + '</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(15px,4vw,22px);letter-spacing:.24em;text-transform:uppercase;opacity:.68;margin:16px 0 44px;padding-left:.24em;">11 \u00b7 11 \u00b7 2026</div><div style="display:flex;flex-direction:column;gap:34px;align-items:center;">' + rows + '</div></div>';
+    const p2 = '<div style="text-align:center;color:' + NAVY + ';font-family:\'Cormorant Garamond\',serif;max-width:520px;margin:0 auto;"><div style="font-family:\'Pinyon Script\',cursive;font-size:clamp(52px,16vw,110px);line-height:1;margin-bottom:24px;">' + dict.whatToWear + '</div><div style="display:flex;justify-content:center;margin-bottom:26px;"><img src="./assets/attire.png" alt="" style="width:min(300px,66vw);height:auto;object-fit:contain;"></div><div style="font-size:clamp(19px,5vw,30px);letter-spacing:.24em;margin-bottom:30px;padding-left:.24em;">' + dict.dressCode + '</div><div style="display:flex;flex-wrap:wrap;gap:20px 22px;justify-content:center;">' + swatches + '</div></div>';
+    const p3 = '<div style="text-align:center;color:' + NAVY + ';font-family:\'Cormorant Garamond\',serif;max-width:520px;margin:0 auto;"><div style="font-family:' + SFF + ';' + SFI + 'font-size:clamp(52px,15vw,108px);line-height:1.05;">' + dict.confirm + '</div><div style="font-weight:400;font-size:clamp(20px,5.5vw,30px);line-height:1.4;margin-top:22px;">' + dict.delighted + '</div><div style="font-weight:500;font-size:clamp(28px,8vw,44px);letter-spacing:.08em;margin-top:32px;">' + diamond + '</div><div style="font-weight:400;font-size:clamp(18px,5vw,26px);letter-spacing:.06em;margin-top:12px;">SHERATON HANOI HOTEL</div><div style="width:160px;height:1px;background:' + NAVY + ';opacity:.35;margin:32px auto 34px;"></div><button id="rsvpBtn" style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(18px,5vw,26px);letter-spacing:.22em;text-transform:uppercase;color:' + NAVY + ';background:transparent;border:1px solid ' + NAVY + ';padding:18px 44px;padding-left:calc(44px + .22em);cursor:pointer;">' + dict.rsvpHere + '</button></div>';
+    return [p0, p1, p2, p3];
+  }
+
+  initMobile() {
+    const comp = this;
+    comp._mobile = true;
+    const page = document.createElement('div');
+    page.id = 'mobilePage';
+    page.style.cssText = 'position:relative;z-index:5;width:100%;opacity:0;transition:opacity 1.3s ease;padding:3vh 0 10vh;';
+    const root = document.querySelector('dc-root') || document.body;
+    try { root.style.height = 'auto'; root.style.minHeight = '100vh'; root.style.overflow = 'visible'; } catch (_) {}
+    root.appendChild(page);
+    comp._renderMobile = function () {
+      const store = comp._i18n || comp._i18nFallback;
+      const dict = store && store[comp._lang];
+      if (!dict) return;
+      const panels = comp._mobilePanelHTML(dict, comp._lang);
+      page.innerHTML = panels.map(function (h, i) {
+        const sep = i > 0 ? 'border-top:1px solid rgba(58,36,23,0.12);' : '';
+        return '<section style="padding:7vh 22px;display:flex;justify-content:center;' + sep + '">' + h + '</section>';
+      }).join('');
+    };
+    comp._fillScreens = function () { comp._renderMobile(); };
+    comp._renderMobile();
+    const openMobile = function () {
+      if (comp._opened) return; comp._opened = true;
+      clearInterval(comp._coverTimer);
+      document.documentElement.style.overflow = 'auto';
+      document.body.style.overflow = 'auto';
+      const frameEl = document.getElementById('frame'); if (frameEl) frameEl.style.display = 'none';
+      page.style.opacity = '1';
+      const progressWrap = document.getElementById('progress');
+      const progressFill = document.getElementById('progressFill');
+      const hint = document.getElementById('hint');
+      if (progressWrap) { progressWrap.style.transition = 'opacity 1.2s ease'; progressWrap.style.opacity = '1'; }
+      if (hint) { hint.style.transition = 'opacity 1.2s ease'; hint.style.opacity = '0.65'; hint.style.animation = 'hintPulse 3s ease-in-out infinite'; }
+      window.addEventListener('scroll', function () {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? (window.scrollY / max) : 0;
+        if (progressFill) progressFill.style.height = (p * 100).toFixed(1) + '%';
+        if (hint) {
+          const atEnd = p > 0.9;
+          if (atEnd && !comp._hintHidden) { comp._hintHidden = true; hint.style.animation = ''; hint.style.opacity = '0'; }
+          else if (!atEnd && comp._hintHidden) { comp._hintHidden = false; hint.style.opacity = '0.65'; hint.style.animation = 'hintPulse 3s ease-in-out infinite'; }
+        }
+      }, { passive: true });
+    };
+    comp._openInvitation = openMobile;
+    if (comp._introDone) openMobile();
   }
 
   init() {
