@@ -1,0 +1,44 @@
+{
+  "en": {
+    "clickToOpen": "Click to open",
+    "gettingMarried": "We're Getting Married",
+    "openBtn": "Open the Invitation",
+    "hint": "Scroll to explore",
+    "invite": "invite you to join us<br>on our wedding day",
+    "at": "at",
+    "celebration": "The Celebration",
+    "ev": {
+      "arrive": "Guests arrive",
+      "vows": "Vows ceremony",
+      "reception": "Evening reception",
+      "ceremony": "Wedding ceremony",
+      "party": "Afterparty"
+    },
+    "whatToWear": "What to Wear",
+    "dressCode": "DRESS CODE",
+    "confirm": "Confirm your attendance",
+    "delighted": "We would be delighted to<br>celebrate this special day with you.",
+    "rsvpHere": "RSVP here"
+  },
+  "vi": {
+    "clickToOpen": "Nhấn để mở",
+    "gettingMarried": "We're Getting Married",
+    "openBtn": "Mở thiệp mời",
+    "hint": "Cuộn để khám phá",
+    "invite": "trân trọng kính mời bạn<br>tới dự bữa tiệc mừng Lễ Thành Hôn cùng gia đình",
+    "at": "tại",
+    "celebration": "The Celebration",
+    "ev": {
+      "arrive": "Đón khách lễ vows",
+      "vows": "Lễ Vows",
+      "reception": "Đón khách tiệc tối",
+      "ceremony": "Lễ Thành Hôn",
+      "party": "Afterparty"
+    },
+    "whatToWear": "What to Wear",
+    "dressCode": "DRESS CODE",
+    "confirm": "Xác nhận tham dự",
+    "delighted": "Sự hiện diện của bạn<br>là niềm vui và vinh hạnh của chúng tôi.",
+    "rsvpHere": "Xác nhận tại đây"
+  }
+}
