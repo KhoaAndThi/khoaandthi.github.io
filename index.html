@@ -70,8 +70,8 @@
 <div id="intro" style="position:fixed;inset:0;z-index:100;overflow:hidden;background:#f3ede2;cursor:pointer;">
   <img id="posterDesktop" alt="Curtains closed" src="./assets/curtain-desktop.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity .8s ease;opacity:1;pointer-events:none;user-select:none;">
   <img id="posterMobile" alt="Curtains closed" src="./assets/curtain-mobile.png" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity .8s ease;opacity:0;pointer-events:none;user-select:none;">
-  <video id="curtainVideoDesktop" muted playsinline preload="auto" src="./assets/curtain-desktop.mp4" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .7s ease;opacity:0;pointer-events:none;"></video>
-  <video id="curtainVideoMobile" muted playsinline preload="auto" src="./assets/curtain-mobile.mp4" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .7s ease;opacity:0;pointer-events:none;"></video>
+  <video id="curtainVideoDesktop" muted playsinline preload="auto" src="./assets/curtain-desktop.mp4" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .7s ease;opacity:0;visibility:hidden;pointer-events:none;"></video>
+  <video id="curtainVideoMobile" muted playsinline preload="auto" src="./assets/curtain-mobile.mp4" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .7s ease;opacity:0;visibility:hidden;pointer-events:none;"></video>
 
   <div id="introBadge" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;text-align:center;pointer-events:none;transition:opacity .7s ease,transform .3s ease;opacity:1;">
     <div style="width:88px;height:88px;margin:0 auto 18px;border:1px solid rgba(92,32,24,0.5);border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(243,237,226,0.35);backdrop-filter:blur(2px);animation:hintPulse 2.4s ease-in-out infinite;"><span style="color:#5C2018;font-size:26px;line-height:1;">&#10022;</span></div>
@@ -281,6 +281,7 @@ class Component extends DCLogic {
       if (started) return; started = true;
       if (badge) badge.style.opacity = '0';
       if (!video) { if (poster) poster.style.opacity = '0'; reveal(); return; }
+      video.style.visibility = 'visible';
       video.style.opacity = '1';
       const p = video.play();
       if (p && p.then) {
