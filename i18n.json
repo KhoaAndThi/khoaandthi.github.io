@@ -18,7 +18,9 @@
     "dressCode": "DRESS CODE",
     "confirm": "Confirm your attendance",
     "delighted": "We would be delighted to<br>celebrate this special day with you.",
-    "rsvpHere": "RSVP here"
+    "rsvpHere": "RSVP here",
+    "venue": "Sheraton Hanoi Hotel",
+    "address": "K5 Nghi Tàm, 11 Xuan Dieu Street, Tay Ho, Hanoi, Vietnam"
   },
   "vi": {
     "clickToOpen": "Nhấn để mở",
@@ -39,6 +41,8 @@
     "dressCode": "DRESS CODE",
     "confirm": "Xác nhận tham dự",
     "delighted": "Sự hiện diện của bạn<br>là niềm vui và vinh hạnh của chúng tôi.",
-    "rsvpHere": "Xác nhận tại đây"
+    "rsvpHere": "Xác nhận tại đây",
+    "venue": "Khách sạn Sheraton Hà Nội",
+    "address": "K5 Nghi Tàm, 11 đường Xuân Diệu, phường Tây Hồ, Hà Nội, Việt Nam"
   }
 }
