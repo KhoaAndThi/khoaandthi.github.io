@@ -6,7 +6,7 @@
     "hint": "Scroll to explore",
     "invite": "invite you to join us<br>on our wedding day",
     "at": "at",
-    "celebration": "The Celebration",
+    "celebration": "Timeline",
     "ev": {
       "arrive": "Guests arrive",
       "vows": "Vows ceremony",
@@ -20,7 +20,8 @@
     "delighted": "We would be delighted to<br>celebrate this special day with you.",
     "rsvpHere": "RSVP here",
     "venue": "Sheraton Hanoi Hotel",
-    "address": "K5 Nghi Tàm, 11 Xuan Dieu Street, Tay Ho, Hanoi, Vietnam"
+    "address": "K5 Nghi Tàm, 11 Xuan Dieu Street, Tay Ho, Hanoi, Vietnam",
+    "tapToOpen": "Tap to open"
   },
   "vi": {
     "clickToOpen": "Nhấn để mở",
@@ -29,20 +30,20 @@
     "hint": "Cuộn để khám phá",
     "invite": "trân trọng kính mời bạn<br>tới dự bữa tiệc mừng Lễ Thành Hôn cùng gia đình",
     "at": "tại",
-    "celebration": "The Celebration",
+    "celebration": "Timeline",
     "ev": {
       "arrive": "Đón khách lễ vows",
       "vows": "Lễ Vows",
       "reception": "Đón khách tiệc tối",
-      "ceremony": "Lễ Thành Hôn",
+      "ceremony": "Lễ Cưới",
       "party": "Afterparty"
     },
-    "whatToWear": "What to Wear",
-    "dressCode": "DRESS CODE",
+    "whatToWear": "Dresscode",
     "confirm": "Xác nhận tham dự",
     "delighted": "Sự hiện diện của bạn<br>là niềm vui và vinh hạnh của chúng tôi.",
     "rsvpHere": "Xác nhận tại đây",
     "venue": "Khách sạn Sheraton Hà Nội",
-    "address": "K5 Nghi Tàm, 11 đường Xuân Diệu, phường Tây Hồ, Hà Nội, Việt Nam"
+    "address": "K5 Nghi Tàm, 11 đường Xuân Diệu, phường Tây Hồ, Hà Nội, Việt Nam",
+    "tapToOpen": "Chạm để mở"
   }
 }
