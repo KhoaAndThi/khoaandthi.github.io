@@ -105,8 +105,6 @@
       <div style="display:flex;gap:12px;margin-bottom:18px;">
         <label class="rsvp-opt" style="flex:1;text-align:center;font-size:19px;border:1px solid rgba(92,32,24,0.4);padding:16px;cursor:pointer;"><input class="guest-opt" type="checkbox" value="1" style="display:none;">1</label>
         <label class="rsvp-opt" style="flex:1;text-align:center;font-size:19px;border:1px solid rgba(92,32,24,0.4);padding:16px;cursor:pointer;"><input class="guest-opt" type="checkbox" value="2" style="display:none;">2</label>
-        <label class="rsvp-opt" style="flex:1;text-align:center;font-size:19px;border:1px solid rgba(92,32,24,0.4);padding:16px;cursor:pointer;"><input class="guest-opt" type="checkbox" value="3" style="display:none;">3</label>
-        <label class="rsvp-opt" style="flex:1;text-align:center;font-size:19px;border:1px solid rgba(92,32,24,0.4);padding:16px;cursor:pointer;"><input class="guest-opt" type="checkbox" value="4" style="display:none;">4</label>
         <label class="rsvp-opt" style="flex:1;text-align:center;font-size:19px;border:1px solid rgba(92,32,24,0.4);padding:16px;cursor:pointer;"><input id="guestOtherChk" class="guest-opt" type="checkbox" value="__other__" style="display:none;">Other</label>
       </div>
       <input id="guestOtherText" type="text" placeholder="How many…" style="width:100%;display:none;font-family:'Cormorant Garamond',serif;font-size:22px;color:#5C2018;background:transparent;border:none;border-bottom:1px solid rgba(92,32,24,0.4);padding:10px 2px;margin-bottom:36px;outline:none;">
@@ -126,7 +124,7 @@ class Component extends DCLogic {
     const self = this;
     self._lang = (localStorage.getItem('ktLang') === 'vi') ? 'vi' : 'en';
     self._i18nFallback = {
-      en: { clickToOpen: "Click to open", gettingMarried: "We're Getting Married", openBtn: "Open the Invitation", hint: "Scroll to explore", invite: "invite you to join us<br>on our wedding day", at: "at", celebration: "The Celebration", ev: { arrive: "Guests arrive", vows: "Vows ceremony", reception: "Evening reception", ceremony: "Wedding ceremony", party: "Party · DJ" }, whatToWear: "What to Wear", dressCode: "DRESS CODE", confirm: "Confirm your attendance", delighted: "We would be delighted to<br>celebrate this special day with you.", rsvpHere: "RSVP here" },
+      en: { clickToOpen: "Click to open", gettingMarried: "We're Getting Married", openBtn: "Open the Invitation", hint: "Scroll to explore", invite: "You are warmly invited<br>to join us on our wedding day", at: "at", celebration: "The Celebration", ev: { arrive: "Guests arrive", vows: "Vows ceremony", reception: "Evening reception", ceremony: "Wedding ceremony", party: "Party · DJ" }, whatToWear: "What to Wear", dressCode: "DRESS CODE", confirm: "Confirm your attendance", delighted: "We would be delighted to<br>celebrate this special day with you.", rsvpHere: "RSVP here" },
       vi: { clickToOpen: "Nhấn để mở", gettingMarried: "Chúng tôi sắp kết hôn", openBtn: "Mở thiệp mời", hint: "Cuộn để khám phá", invite: "trân trọng kính mời bạn<br>đến chung vui ngày cưới", at: "tại", celebration: "Lễ Thành Hôn", ev: { arrive: "Đón khách", vows: "Nghi lễ", reception: "Tiệc chiều", ceremony: "Lễ thành hôn", party: "Tiệc · DJ" }, whatToWear: "Trang phục", dressCode: "QUY ĐỊNH TRANG PHỤC", confirm: "Xác nhận tham dự", delighted: "Chúng tôi rất hân hạnh được đón tiếp bạn<br>trong ngày trọng đại này.", rsvpHere: "Phản hồi tại đây" }
     };
     self._applyLang = function () {
