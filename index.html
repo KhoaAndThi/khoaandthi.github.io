@@ -42,7 +42,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
   html, body { margin: 0; padding: 0; overflow: hidden; background: #eaf1ee; }
   * { box-sizing: border-box; }
@@ -103,7 +103,7 @@
 
   <div id="introOverlay" style="position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;opacity:0;transition:opacity 1s ease;pointer-events:none;background:radial-gradient(ellipse 62% 58% at 50% 50%, rgba(247,242,232,0.92) 0%, rgba(247,242,232,0.7) 45%, rgba(247,242,232,0) 78%);">
     <img src="./assets/intro-photo.png" alt="Khoa and Thi" style="width:min(300px,62vw);height:auto;margin:0 0 16px;user-select:none;pointer-events:none;">
-    <div id="lblMarried" style="font-family:'Cinzel',serif;letter-spacing:0.28em;text-transform:uppercase;font-size:clamp(11px,1.4vw,13px);color:#5C2018;margin-bottom:10px;">We're Getting Married</div>
+    <div id="lblMarried" style="font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;font-size:11px;color:#5C2018;margin-bottom:10px;">We're Getting Married</div>
     <div style="font-family:'Pinyon Script',cursive;color:#5C2018;font-size:clamp(46px,10vw,112px);line-height:1.02;">Khoa <span style="font-size:0.7em;">&amp;</span> Thi</div>
     <div style="font-family:'Cormorant Garamond',serif;letter-spacing:0.22em;font-weight:600;font-size:clamp(20px,3vw,30px);color:#5C2018;margin-top:22px;">11 . 11 . 2026</div>
     <button id="enterBtn" style="margin-top:38px;font-family:'Cinzel',serif;letter-spacing:0.26em;text-transform:uppercase;font-size:12px;color:#5C2018;background:transparent;border:1px solid rgba(92,32,24,0.45);border-radius:2px;padding:15px 34px;cursor:pointer;transition:all .3s ease;">Open the Invitation</button>
@@ -166,7 +166,7 @@ class Component extends DCLogic {
       const ff = self._lang === 'vi' ? "'Cormorant Garamond',serif" : "'Cinzel',serif";
       const fs = self._lang === 'vi' ? { lblClick: '13px', lblMarried: '13px', enterBtn: '13px' } : { lblClick: '11px', lblMarried: '11px', enterBtn: '11px' };
       const fw = self._lang === 'vi' ? '600' : '400';
-      const setTxt = (id, html) => { const e = document.getElementById(id); if (!e) return; e.innerHTML = html; e.style.fontFamily = ff; if (fs[id]) { e.style.fontSize = fs[id]; e.style.fontWeight = fw; } };
+      const setTxt = (id, html) => { const e = document.getElementById(id); if (!e) return; e.innerHTML = html; e.style.fontFamily = ff; if (fs[id]) { e.style.fontSize = fs[id]; e.style.fontWeight = fw; } if (id === 'lblMarried') { e.style.fontFamily = "'Cormorant Garamond',serif"; e.style.fontSize = '11px'; e.style.fontWeight = '600'; e.style.letterSpacing = '0.28em'; e.style.textTransform = 'uppercase'; } };
       setTxt('lblClick', (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) ? (dict.tapToOpen || (self._lang === 'vi' ? 'Chạm để mở' : 'Tap to open')) : dict.clickToOpen);
       setTxt('lblMarried', dict.gettingMarried);
       setTxt('enterBtn', dict.openBtn);
