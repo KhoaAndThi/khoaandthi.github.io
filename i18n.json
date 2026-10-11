@@ -8,11 +8,11 @@
     "at": "at",
     "celebration": "Timeline",
     "ev": {
-      "arrive": "Guests arrive",
-      "vows": "Vows ceremony",
-      "reception": "Evening reception",
-      "ceremony": "Wedding ceremony",
-      "party": "Afterparty"
+      "arrive": "Guest Arrival",
+      "vows": "Vows Ceremony",
+      "reception": "Evening Reception",
+      "ceremony": "Wedding Ceremony",
+      "party": "After Party"
     },
     "whatToWear": "What to Wear",
     "dressCode": "DRESS CODE",
@@ -28,17 +28,17 @@
     "gettingMarried": "We're Getting Married",
     "openBtn": "Mở thiệp mời",
     "hint": "Cuộn để khám phá",
-    "invite": "trân trọng kính mời bạn<br>tới dự bữa tiệc mừng Lễ Thành Hôn của chúng tôi",
+    "invite": "trân trọng kính mời <br>tới dự bữa tiệc mừng Lễ Thành Hôn của gia đình",
     "at": "tại",
     "celebration": "Timeline",
     "ev": {
-      "arrive": "Đón khách lễ vows",
+      "arrive": "Đón Khách",
       "vows": "Lễ Vows",
-      "reception": "Đón khách tiệc tối",
-      "ceremony": "Lễ Cưới",
-      "party": "Afterparty"
+      "reception": "Đón Khách Tiệc Tối",
+      "ceremony": "Lễ Thành Hôn",
+      "party": "After Party"
     },
-    "whatToWear": "Dresscode",
+    "whatToWear": "Gợi ý trang phục",
     "confirm": "Xác nhận tham dự",
     "delighted": "Sự hiện diện của bạn<br>là niềm vui và vinh hạnh của chúng tôi.",
     "rsvpHere": "Xác nhận tại đây",

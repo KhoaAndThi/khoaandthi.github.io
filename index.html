@@ -2,7 +2,30 @@
 <html>
 <head>
 <meta charset="utf-8">
+<script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)parents(\/|$)/);var d=m?m[1]:(/[?&]f=1(&|$)/.test(location.search)?p.replace(/[^\/]*$/,''):null);if(d)document.write('<base href="'+d+'">');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function () {
+  try {
+    var p = new URLSearchParams(location.search);
+    var path = location.pathname.replace(/^\/+|\/+$/g, '').replace(/^index\.html$/, '');
+    if (/^parents(\/|$)/.test(path)) { window.__ktFamily = true; path = path.replace(/^parents\/?/, ''); }
+    var slug = p.get('g') || path;
+    window.__ktSlug = slug || '';
+    if (p.get('f') === '1') window.__ktFamily = true;
+    if (window.__ktFamily) { try { history.replaceState(null, '', '/parents' + (slug ? '/' + slug : '') + location.hash); } catch (_) {} }
+    if (slug) {
+      var b = slug.replace(/-/g, '+').replace(/_/g, '/'); while (b.length % 4) b += '=';
+      var n = decodeURIComponent(escape(atob(b)));
+      if (n && !/[\u0000-\u001f]/.test(n)) {
+        if (n.charAt(0) === '~') { window.__ktFamily = true; n = n.slice(1); }
+        window.__ktGuestName = n;
+      }
+    }
+  } catch (_) {}
+  if (window.__ktFamily) document.write('<style>#langPill{display:none !important;}</style>');
+})();
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -122,7 +145,7 @@
 class Component extends DCLogic {
   componentDidMount() {
     const self = this;
-    self._lang = (localStorage.getItem('ktLang') === 'vi') ? 'vi' : 'en';
+    self._lang = window.__ktFamily ? 'vi' : ((localStorage.getItem('ktLang') === 'vi') ? 'vi' : 'en');
     self._i18nFallback = {
       en: { clickToOpen: "Click to open", gettingMarried: "We're Getting Married", openBtn: "Open the Invitation", hint: "Scroll to explore", invite: "You are warmly invited<br>to join us on our wedding day", at: "at", celebration: "The Celebration", ev: { arrive: "Guests arrive", vows: "Vows ceremony", reception: "Evening reception", ceremony: "Wedding ceremony", party: "Party · DJ" }, whatToWear: "What to Wear", dressCode: "DRESS CODE", confirm: "Confirm your attendance", delighted: "We would be delighted to<br>celebrate this special day with you.", rsvpHere: "RSVP here" },
       vi: { clickToOpen: "Nhấn để mở", gettingMarried: "Chúng tôi sắp kết hôn", openBtn: "Mở thiệp mời", hint: "Cuộn để khám phá", invite: "trân trọng kính mời bạn<br>đến chung vui ngày cưới", at: "tại", celebration: "Lễ Thành Hôn", ev: { arrive: "Đón khách", vows: "Nghi lễ", reception: "Tiệc chiều", ceremony: "Lễ thành hôn", party: "Tiệc · DJ" }, whatToWear: "Trang phục", dressCode: "QUY ĐỊNH TRANG PHỤC", confirm: "Xác nhận tham dự", delighted: "Chúng tôi rất hân hạnh được đón tiếp bạn<br>trong ngày trọng đại này.", rsvpHere: "Phản hồi tại đây" }
@@ -150,7 +173,7 @@ class Component extends DCLogic {
       setTxt('hintLbl', dict.hint);
       if (self._fillScreens) self._fillScreens(dict);
     };
-    self._setLang = function (l) { if (self._lang === l) return; self._lang = l; try { localStorage.setItem('ktLang', l); } catch (_) {} self._applyLang(); };
+    self._setLang = function (l) { if (window.__ktFamily || self._lang === l) return; self._lang = l; try { localStorage.setItem('ktLang', l); } catch (_) {} self._applyLang(); };
     const _enB = document.getElementById('langEN'), _vnB = document.getElementById('langVN');
     if (_enB) _enB.addEventListener('click', () => self._setLang('en'));
     if (_vnB) _vnB.addEventListener('click', () => self._setLang('vi'));
@@ -332,6 +355,14 @@ class Component extends DCLogic {
     catch (_) { return (window.innerWidth || 1024) < 700; }
   }
 
+  _events(dict) {
+    if (window.__ktFamily) {
+      const f = dict.evFamily || {};
+      return [['tl-reception.png', '17:00', f.reception || 'Đón Khách'], ['tl-ceremony.png', '18:00', f.ceremony || 'Lễ Thành Hôn'], ['tl-dinner.png', '18:30', f.dinner || 'Khai tiệc']];
+    }
+    return [['tl-arrive.png', '15:00', dict.ev.arrive], ['tl-vows.png', '15:30', dict.ev.vows], ['tl-reception.png', '17:00', dict.ev.reception], ['tl-ceremony.png', '18:00', dict.ev.ceremony], ['tl-party.png', '20:00', dict.ev.party]];
+  }
+
   _mobilePanelHTML(dict, lang) {
     const NAVY = '#3a2417';
     const SFF = lang === 'vi' ? "'Cormorant Garamond',serif" : "'Pinyon Script',cursive";
@@ -340,7 +371,7 @@ class Component extends DCLogic {
     const diamond = '11 <span style="font-size:.4em;vertical-align:.3em;opacity:.7;">&#10022;</span> 11 <span style="font-size:.4em;vertical-align:.3em;opacity:.7;">&#10022;</span> 2026';
     const rule = '<div style="display:flex;align-items:center;justify-content:center;gap:16px;margin:30px 0;"><span style="width:64px;height:1px;background:' + NAVY + ';opacity:.5;"></span><span style="font-size:22px;color:' + NAVY + ';opacity:.8;">&#10070;</span><span style="width:64px;height:1px;background:' + NAVY + ';opacity:.5;"></span></div>';
     const row = (src, t, l) => '<div style="display:flex;align-items:center;gap:min(22px,4vw);text-align:left;width:100%;max-width:400px;"><img src="./assets/' + src + '" alt="" style="width:min(72px,15vw,9vh);height:min(72px,15vw,9vh);object-fit:contain;flex-shrink:0;"><div><div style="font-family:\'Cormorant Garamond\',serif;font-weight:500;font-size:clamp(24px,6.5vw,34px);line-height:1;color:' + NAVY + ';">' + t + '</div><div style="font-family:\'Cormorant Garamond\',serif;font-weight:400;font-size:clamp(17px,4.8vw,24px);line-height:1.15;margin-top:3px;color:' + NAVY + ';opacity:.85;">' + l + '</div></div></div>';
-    const rows = row('tl-arrive.png', '15:00', dict.ev.arrive) + row('tl-vows.png', '15:30', dict.ev.vows) + row('tl-reception.png', '17:00', dict.ev.reception) + row('tl-ceremony.png', '18:00', dict.ev.ceremony) + row('tl-party.png', '20:00', dict.ev.party);
+    const rows = this._events(dict).map(e => row(e[0], e[1], e[2])).join('');
     const sw = (c1, c2, rot) => '<div style="width:min(70px,15vw);height:min(82px,17.5vw);border-radius:47% 53% 45% 55% / 40% 44% 56% 60%;background:radial-gradient(58% 52% at 44% 40%, ' + c1 + ' 0%, ' + c2 + ' 58%, rgba(255,255,255,0) 100%), radial-gradient(52% 58% at 62% 66%, ' + c1 + ' 0%, rgba(255,255,255,0) 82%);transform:rotate(' + rot + 'deg);opacity:.92;"></div>';
     const swatches = sw('#a9c6dc', '#bcd4e6', -4) + sw('#e8bfb6', '#f0d2cb', -2) + sw('#7a2231', '#94303f', 3) + sw('#5c4433', '#71563f', -3) + sw('#b9c9a6', '#cdd9be', 4) + sw('#dcc389', '#e7d3a3', -3) + sw('#2b2b2b', '#454545', 2);
     const p0 = '<div style="text-align:center;color:' + NAVY + ';font-family:\'Cormorant Garamond\',serif;max-width:560px;margin:0 auto;"><img src="./assets/kt-logo.png" alt="Khoa &amp; Thi" style="display:block;margin:0 auto;width:min(130px,32vw,14vh);height:auto;">' + rule + '<div style="font-weight:400;font-size:clamp(20px,5.6vw,28px);line-height:1.3;">' + dict.invite + '</div><div style="font-weight:500;font-size:clamp(28px,8vw,44px);letter-spacing:.08em;margin-top:min(34px,3.4vh);">' + diamond + '</div><div style="font-weight:400;font-size:clamp(17px,4.6vw,25px);letter-spacing:.06em;margin-top:min(24px,2.6vh);">' + dict.at + '<br><span style="text-transform:uppercase;">' + dict.venue + '</span></div><div style="font-weight:400;font-size:clamp(13px,3.6vw,17px);line-height:1.4;margin-top:min(14px,1.6vh);opacity:.8;">' + dict.address + '</div>' + rule + '</div>';
@@ -504,7 +535,7 @@ class Component extends DCLogic {
       const px = n => Math.round(n * sm);
     const html = [
       `<div style="text-align:center;color:${NAVY};font-family:'Cormorant Garamond',serif;"><div class="kt-a" style="display:flex;justify-content:center;"><img src="./assets/kt-logo.png" alt="Khoa &amp; Thi" style="display:block;width:380px;height:auto;"></div><div class="kt-a" style="display:flex;align-items:center;justify-content:center;gap:20px;margin:36px 0;"><span style="width:130px;height:1px;background:${NAVY};opacity:0.5;"></span><span style="font-size:34px;color:${NAVY};opacity:0.8;">&#10070;</span><span style="width:130px;height:1px;background:${NAVY};opacity:0.5;"></span></div><div class="kt-a" style="font-weight:400;font-size:70px;letter-spacing:0.03em;line-height:1.25;">${dict.invite}</div><div class="kt-a" style="font-weight:500;font-size:104px;letter-spacing:0.12em;margin-top:52px;">11 <span style="font-size:0.4em;vertical-align:0.3em;opacity:0.7;">&#10022;</span> 11 <span style="font-size:0.4em;vertical-align:0.3em;opacity:0.7;">&#10022;</span> 2026</div><div class="kt-a" style="font-weight:400;font-size:60px;letter-spacing:0.1em;margin-top:36px;">${dict.at}<br><span style="text-transform:uppercase;">${dict.venue}</span></div><div class="kt-a" style="font-weight:400;font-size:34px;letter-spacing:0.04em;line-height:1.4;margin-top:18px;opacity:0.8;">${dict.address}</div><div class="kt-a" style="display:flex;align-items:center;justify-content:center;gap:20px;margin:52px 0 0;"><span style="width:130px;height:1px;background:${NAVY};opacity:0.5;"></span><span style="font-size:34px;color:${NAVY};opacity:0.8;">&#10070;</span><span style="width:130px;height:1px;background:${NAVY};opacity:0.5;"></span></div></div>`,
-      `<div style="text-align:center;color:${NAVY};"><div style="font-family:'Pinyon Script',cursive;font-size:${px(140)}px;line-height:1;">${dict.celebration}</div><div style="font-family:'Cormorant Garamond',serif;font-size:36px;letter-spacing:0.24em;text-transform:uppercase;opacity:0.68;margin:22px 0 68px;padding-left:0.24em;">11 · 11 · 2026</div><div style="display:flex;gap:40px;justify-content:center;align-items:flex-start;">${tCol('tl-arrive.png','15:00',dict.ev.arrive)}${tCol('tl-vows.png','15:30',dict.ev.vows)}${tCol('tl-reception.png','17:00',dict.ev.reception)}${tCol('tl-ceremony.png','18:00',dict.ev.ceremony)}${tCol('tl-party.png','20:00',dict.ev.party)}</div></div>`,
+      `<div style="text-align:center;color:${NAVY};"><div style="font-family:'Pinyon Script',cursive;font-size:${px(140)}px;line-height:1;">${dict.celebration}</div><div style="font-family:'Cormorant Garamond',serif;font-size:36px;letter-spacing:0.24em;text-transform:uppercase;opacity:0.68;margin:22px 0 68px;padding-left:0.24em;">11 · 11 · 2026</div><div style="display:flex;gap:40px;justify-content:center;align-items:flex-start;">${comp._events(dict).map(e => tCol(e[0], e[1], e[2])).join('')}</div></div>`,
       `<div style="text-align:center;color:${NAVY};font-family:'Cormorant Garamond',serif;"><div style="font-family:'Pinyon Script',cursive;font-size:${px(125)}px;line-height:1;margin-bottom:44px;">${dict.whatToWear}</div><div style="display:flex;justify-content:center;align-items:flex-end;margin-bottom:52px;"><div data-art style="width:560px;height:640px;"><img src="./assets/attire.png" alt="" style="width:100%;height:100%;object-fit:contain;"></div></div><div style="display:flex;gap:60px;justify-content:center;align-items:flex-start;">${tSwatch('#a9c6dc','#bcd4e6','Dusty Blue',-4)}${tSwatch('#e8bfb6','#f0d2cb','Blush',-2)}${tSwatch('#7a2231','#94303f','Burgundy',3)}${tSwatch('#5c4433','#71563f','Brown',-3)}${tSwatch('#b9c9a6','#cdd9be','Sage',4)}${tSwatch('#dcc389','#e7d3a3','Champagne',-3)}${tSwatch('#2b2b2b','#454545','Black',2)}</div></div>`,
       `<div style="text-align:center;color:${NAVY};font-family:'Cormorant Garamond',serif;"><div style="font-family:'Pinyon Script',cursive;font-size:${px(150)}px;line-height:1;">${dict.confirm}</div><div style="font-weight:400;font-size:52px;line-height:1.4;margin-top:30px;">${dict.delighted}</div><div style="width:200px;height:1px;background:${NAVY};opacity:0.35;margin:44px auto 48px;"></div><button id="rsvpBtn" data-art style="font-family:'Cormorant Garamond',serif;font-size:39px;letter-spacing:0.24em;text-transform:uppercase;color:${NAVY};background:transparent;border:1px solid ${NAVY};padding:24px 56px;padding-left:calc(56px + 0.24em);cursor:pointer;">${dict.rsvpHere}</button></div>`
     ];
@@ -825,11 +856,12 @@ class Component extends DCLogic {
 <script>
 (function () {
   var p = new URLSearchParams(location.search);
-  var slug = p.get('g') || location.pathname.replace(/^\/+|\/+$/g, '').replace(/^index\.html$/, '');
+  var slug = window.__ktSlug || '';
   if (!slug) return;
-  if (p.get('g')) { try { history.replaceState(null, '', '/' + slug + location.hash); } catch (_) {} }
+  if (p.get('g') && !window.__ktFamily) { try { history.replaceState(null, '', '/' + slug + location.hash); } catch (_) {} }
   fetch('./guests.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (g) {
-    var name = g[slug] || g[slug.toLowerCase()];
+    var name = g[slug] || g[slug.toLowerCase()] || window.__ktGuestName;
+    if (name && name.charAt(0) === '~') name = name.slice(1);
     if (!name) { try { var b = slug.replace(/-/g, '+').replace(/_/g, '/'); while (b.length % 4) b += '='; name = decodeURIComponent(escape(atob(b))); } catch (_) { name = ''; } }
     if (!name || /[\u0000-\u001f]/.test(name)) return;
     window.__guestName = name;
