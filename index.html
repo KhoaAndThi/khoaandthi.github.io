@@ -179,6 +179,7 @@ class Component extends DCLogic {
     if (_vnB) _vnB.addEventListener('click', () => self._setLang('vi'));
     fetch('./i18n.json').then(r => r.json()).then(d => { self._i18n = d; self._applyLang(); }).catch(() => { self._applyLang(); });
     self._applyLang();
+    window.__ktRerender = function () { try { self._applyLang(); } catch (_) {} };
     this.setupCover();
     this.setupIntro();
     document.addEventListener('click', (e) => {
@@ -219,7 +220,9 @@ class Component extends DCLogic {
       const gParts = [...rsvpForm.querySelectorAll('.guest-opt:checked')].map(c => c.value === '__other__' ? (guestOtherText && guestOtherText.value.trim()) : c.value).filter(Boolean);
       const guestHidden = document.getElementById('guestHidden');
       if (guestHidden) guestHidden.value = gParts.join(', ');
-      const ENDPOINT = 'https://script.google.com/macros/s/AKfycbyAN47OdTGhQJ0cchLq84ZWLXYRqQL36_UOOW3KK52KjOvu48YzZW9k6eg0VGX6KU58/exec';
+      const ENDPOINT = window.__ktFamily
+        ? 'https://script.google.com/macros/s/AKfycbwrm3YZye3TcKZeQArQCFRUdXm6PnjjYPOhLpASL7BZtuRtXbSETiCzBRs93tBuVLNj/exec'
+        : 'https://script.google.com/macros/s/AKfycbyAN47OdTGhQJ0cchLq84ZWLXYRqQL36_UOOW3KK52KjOvu48YzZW9k6eg0VGX6KU58/exec';
       const data = new URLSearchParams(new FormData(rsvpForm));
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
       fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', body: data })
@@ -883,6 +886,7 @@ class Component extends DCLogic {
     if (!name) { try { var b = slug.replace(/-/g, '+').replace(/_/g, '/'); while (b.length % 4) b += '='; name = decodeURIComponent(escape(atob(b))); } catch (_) { name = ''; } }
     if (!name || /[\u0000-\u001f]/.test(name)) return;
     window.__guestName = name;
+    if (window.__ktGuestName !== name) { window.__ktGuestName = name; if (window.__ktRerender) window.__ktRerender(); }
     var fill = function () {
       var el = document.querySelector('input[name="Họ và tên | Full name"]');
       if (!el) return setTimeout(fill, 300);
