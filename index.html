@@ -78,7 +78,7 @@
     <div id="lblClick" style="font-family:'Cinzel',serif;letter-spacing:0.34em;text-transform:uppercase;font-size:13px;color:rgb(105 24 11);">Click to open</div>
   </div>
 
-  <div id="introOverlay" style="position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;opacity:0;transition:opacity 1s ease;pointer-events:none;">
+  <div id="introOverlay" style="position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;opacity:0;transition:opacity 1s ease;pointer-events:none;background:radial-gradient(ellipse 62% 58% at 50% 50%, rgba(247,242,232,0.92) 0%, rgba(247,242,232,0.7) 45%, rgba(247,242,232,0) 78%);">
     <img src="./assets/intro-photo.png" alt="Khoa and Thi" style="width:min(300px,62vw);height:auto;margin:0 0 16px;user-select:none;pointer-events:none;">
     <div id="lblMarried" style="font-family:'Cinzel',serif;letter-spacing:0.28em;text-transform:uppercase;font-size:clamp(11px,1.4vw,13px);color:#5C2018;margin-bottom:10px;">We're Getting Married</div>
     <div style="font-family:'Pinyon Script',cursive;color:#5C2018;font-size:clamp(46px,10vw,112px);line-height:1.02;">Khoa <span style="font-size:0.7em;">&amp;</span> Thi</div>
@@ -141,7 +141,9 @@ class Component extends DCLogic {
         vnB.style.boxShadow = self._lang === 'vi' ? '0 2px 6px rgba(40,20,16,0.28)' : 'none';
       }
       const ff = self._lang === 'vi' ? "'Cormorant Garamond',serif" : "'Cinzel',serif";
-      const setTxt = (id, html) => { const e = document.getElementById(id); if (!e) return; e.innerHTML = html; e.style.fontFamily = ff; };
+      const fs = self._lang === 'vi' ? { lblClick: '13px', lblMarried: '13px', enterBtn: '13px' } : { lblClick: '11px', lblMarried: '11px', enterBtn: '11px' };
+      const fw = self._lang === 'vi' ? '600' : '400';
+      const setTxt = (id, html) => { const e = document.getElementById(id); if (!e) return; e.innerHTML = html; e.style.fontFamily = ff; if (fs[id]) { e.style.fontSize = fs[id]; e.style.fontWeight = fw; } };
       setTxt('lblClick', (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) ? (dict.tapToOpen || (self._lang === 'vi' ? 'Chạm để mở' : 'Tap to open')) : dict.clickToOpen);
       setTxt('lblMarried', dict.gettingMarried);
       setTxt('enterBtn', dict.openBtn);
@@ -819,6 +821,26 @@ class Component extends DCLogic {
 
   }
 }
+</script>
+<script>
+(function () {
+  var p = new URLSearchParams(location.search);
+  var slug = p.get('g') || location.pathname.replace(/^\/+|\/+$/g, '').replace(/^index\.html$/, '');
+  if (!slug) return;
+  if (p.get('g')) { try { history.replaceState(null, '', '/' + slug + location.hash); } catch (_) {} }
+  fetch('./guests.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }).then(function (g) {
+    var name = g[slug] || g[slug.toLowerCase()];
+    if (!name) { try { var b = slug.replace(/-/g, '+').replace(/_/g, '/'); while (b.length % 4) b += '='; name = decodeURIComponent(escape(atob(b))); } catch (_) { name = ''; } }
+    if (!name || /[\u0000-\u001f]/.test(name)) return;
+    window.__guestName = name;
+    var fill = function () {
+      var el = document.querySelector('input[name="Họ và tên | Full name"]');
+      if (!el) return setTimeout(fill, 300);
+      if (!el.value) el.value = name;
+    };
+    fill();
+  }).catch(function () {});
+})();
 </script>
 </body>
 </html>
