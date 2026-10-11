@@ -355,6 +355,15 @@ class Component extends DCLogic {
     catch (_) { return (window.innerWidth || 1024) < 700; }
   }
 
+  _famDict(dict) {
+    if (!window.__ktFamily) return dict;
+    const f = dict.family || {};
+    return Object.assign({}, dict, {
+      invite: f.invite || 'trân trọng kính mời<br>tới dự bữa tiệc mừng Lễ Thành Hôn<br>của hai con chúng tôi',
+      delighted: f.delighted || 'Sự hiện diện của quý khách<br>là niềm vui và vinh hạnh của chúng tôi.'
+    });
+  }
+
   _events(dict) {
     if (window.__ktFamily) {
       const f = dict.evFamily || {};
@@ -364,6 +373,7 @@ class Component extends DCLogic {
   }
 
   _mobilePanelHTML(dict, lang) {
+    dict = this._famDict(dict);
     const NAVY = '#3a2417';
     const SFF = lang === 'vi' ? "'Cormorant Garamond',serif" : "'Pinyon Script',cursive";
     const SFI = lang === 'vi' ? 'font-style:italic;' : '';
@@ -528,6 +538,7 @@ class Component extends DCLogic {
     const tCol = (src, t, l) => `<div style="flex:1;min-width:0;text-align:center;"><div data-art style="width:400px;height:400px;margin:0 auto 18px;"><img src="./assets/${src}" alt="" style="width:100%;height:100%;object-fit:contain;"></div><div style="font-family:'Cormorant Garamond',serif;font-weight:500;font-size:99px;letter-spacing:0.06em;color:${NAVY};">${t}</div><div style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:72px;letter-spacing:0.02em;line-height:1.15;margin-top:10px;color:${NAVY};">${l}</div></div>`;
     const tSwatch = (c1, c2, name, rot) => `<div style="text-align:center;"><div style="width:150px;height:172px;margin:0 auto;border-radius:47% 53% 45% 55% / 40% 44% 56% 60%;background:radial-gradient(58% 52% at 44% 40%, ${c1} 0%, ${c2} 58%, rgba(255,255,255,0) 100%), radial-gradient(52% 58% at 62% 66%, ${c1} 0%, rgba(255,255,255,0) 82%);transform:rotate(${rot}deg);opacity:0.92;"></div></div>`;
     function mk(dict, lang) {
+      dict = comp._famDict(dict);
       const vi = lang === 'vi';
       const SFF = vi ? "'Cormorant Garamond',serif" : "'Pinyon Script',cursive";
       const SFI = vi ? "font-style:italic;" : "";
