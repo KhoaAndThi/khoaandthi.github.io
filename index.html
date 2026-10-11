@@ -359,7 +359,14 @@ class Component extends DCLogic {
     if (!window.__ktFamily) return dict;
     const f = dict.family || {};
     return Object.assign({}, dict, {
-      invite: f.invite || 'trân trọng kính mời<br>tới dự bữa tiệc mừng Lễ Thành Hôn<br>của hai con chúng tôi',
+      invite: (function () {
+        const base = f.invite || 'trân trọng kính mời<br>tới dự bữa tiệc mừng Lễ Thành Hôn<br>của hai con chúng tôi';
+        const n = window.__ktGuestName;
+        if (!n) return base;
+        const safe = String(n).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const nameHtml = '<span style="display:block;font-family:\'Pinyon Script\',cursive;font-style:normal;font-weight:400;font-size:1.9em;line-height:1.15;letter-spacing:0;text-transform:none;margin:0.18em 0 0.12em;">' + safe + '</span>';
+        return base.replace(/kính mời\s*(<br\s*\/?>)?/i, 'kính mời' + nameHtml);
+      })(),
       delighted: f.delighted || 'Sự hiện diện của quý khách<br>là niềm vui và vinh hạnh của chúng tôi.'
     });
   }
