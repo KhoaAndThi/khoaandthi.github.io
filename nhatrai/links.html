@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Link khách Nhà Trai · Khoa &amp; Thi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f3ede2;color:#3a2417;font-family:'Cormorant Garamond',serif;}
+a,a:hover{color:#5C2018;}
+.lbl{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;}
+.f{font-family:'Cormorant Garamond',serif;font-size:20px;padding:10px 12px;border:1px solid rgba(92,32,24,.3);background:#fbf8f1;color:#3a2417;border-radius:2px;box-sizing:border-box;width:100%;}
+.btn{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;padding:13px 22px;border-radius:2px;cursor:pointer;background:transparent;color:#5C2018;border:1px solid rgba(92,32,24,.45);}
+.btn.p{background:#5C2018;color:#f3ede2;border-color:#5C2018;}
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr) auto;gap:14px;padding:12px 0;border-bottom:1px solid rgba(92,32,24,.15);align-items:center;font-size:19px;}
+.row a{word-break:break-all;font-size:16px;}
+.cp{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:8px 12px;border:1px solid rgba(92,32,24,.35);background:transparent;color:#5C2018;cursor:pointer;border-radius:2px;}
+</style></head>
+<body>
+<div style="max-width:880px;margin:0 auto;padding:48px 24px 80px;">
+  <div class="lbl" style="font-size:13px;letter-spacing:.24em;color:#5C2018;">Khoa &amp; Thi</div>
+  <h1 style="font-weight:500;font-size:40px;margin:8px 0 6px;">Tạo link khách Nhà Trai</h1>
+  <p style="font-size:18px;margin:0 0 28px;opacity:.8;">Mỗi dòng một tên. Link mở thiệp bản tiếng Việt và điền sẵn tên khách vào phiếu xác nhận.</p>
+  <div style="display:grid;gap:16px;">
+    <label style="display:grid;gap:8px;"><span class="lbl">Tên khách</span>
+      <textarea id="names" rows="10" class="f" style="line-height:1.4;resize:vertical;"></textarea></label>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+      <button id="copyAll" class="btn p">Sao chép tất cả</button>
+      <button id="csv" class="btn">Tải file CSV</button>
+    </div>
+    <div id="count" class="lbl" style="margin-top:12px;"></div>
+    <div id="list" style="border-top:1px solid rgba(92,32,24,.2);"></div>
+  </div>
+</div>
+<script>
+var base = location.origin;
+var ta = document.getElementById('names'), list = document.getElementById('list');
+ta.value = localStorage.getItem('ktGL_names_nhatrai') || '';
+function enc(s){ return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+function rows(){ return ta.value.split('\n').map(function(n){return n.trim();}).filter(Boolean).map(function(n){ return { name:n, url: base + '/nhatrai/' + enc(n) }; }); }
+function esc(s){ return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+function copy(t, btn, lbl){ navigator.clipboard.writeText(t).then(function(){ btn.textContent='Đã chép'; setTimeout(function(){ btn.textContent=lbl; },1400); }); }
+function render(){
+  localStorage.setItem('ktGL_names_nhatrai', ta.value);
+  var r = rows();
+  document.getElementById('count').textContent = r.length + ' link';
+  list.innerHTML = r.map(function(x,i){ return '<div class="row"><div>'+esc(x.name)+'</div><a href="'+x.url+'" target="_blank">'+x.url+'</a><button class="cp" data-i="'+i+'">Chép</button></div>'; }).join('');
+}
+list.addEventListener('click', function(e){ var b = e.target.closest('.cp'); if (!b) return; copy(rows()[+b.dataset.i].url, b, 'Chép'); });
+ta.addEventListener('input', render);
+document.getElementById('copyAll').onclick = function(){ copy(rows().map(function(r){return r.name+'\t'+r.url;}).join('\n'), this, 'Sao chép tất cả'); };
+document.getElementById('csv').onclick = function(){
+  var d = '\ufeffTên,Link\n' + rows().map(function(r){ return '"'+r.name.replace(/"/g,'""')+'",'+r.url; }).join('\n');
+  var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([d],{type:'text/csv'})); a.download='link-khach-nhatrai.csv'; a.click();
+};
+render();
+</script>
+</body></html>

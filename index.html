@@ -2,23 +2,26 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)parents(\/|$)/);var d=m?m[1]:(/[?&]f=1(&|$)/.test(location.search)?p.replace(/[^\/]*$/,''):null);if(d)document.write('<base href="'+d+'">');})();</script>
+<script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)(parents|nhatrai|nhagai)(\/|$)/);var d=m?m[1]:(/[?&]f=(1|nhatrai|nhagai)(&|$)/.test(location.search)?p.replace(/[^\/]*$/,''):null);if(d)document.write('<base href="'+d+'">');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 (function () {
   try {
     var p = new URLSearchParams(location.search);
     var path = location.pathname.replace(/^\/+|\/+$/g, '').replace(/^index\.html$/, '');
-    if (/^parents(\/|$)/.test(path)) { window.__ktFamily = true; path = path.replace(/^parents\/?/, ''); }
+    var fm = path.match(/^(parents|nhatrai|nhagai)(\/|$)/);
+    if (fm) { window.__ktFamily = true; window.__ktSide = fm[1] === 'nhagai' ? 'nhagai' : 'nhatrai'; path = path.replace(/^(parents|nhatrai|nhagai)\/?/, ''); }
     var slug = p.get('g') || path;
     window.__ktSlug = slug || '';
-    if (p.get('f') === '1') window.__ktFamily = true;
-    if (window.__ktFamily) { try { history.replaceState(null, '', '/parents' + (slug ? '/' + slug : '') + location.hash); } catch (_) {} }
+    var fq = p.get('f');
+    if (fq === '1' || fq === 'nhatrai') { window.__ktFamily = true; window.__ktSide = 'nhatrai'; }
+    if (fq === 'nhagai') { window.__ktFamily = true; window.__ktSide = 'nhagai'; }
+    if (window.__ktFamily) { try { history.replaceState(null, '', '/' + window.__ktSide + (slug ? '/' + slug : '') + location.hash); } catch (_) {} }
     if (slug) {
       var b = slug.replace(/-/g, '+').replace(/_/g, '/'); while (b.length % 4) b += '=';
       var n = decodeURIComponent(escape(atob(b)));
       if (n && !/[\u0000-\u001f]/.test(n)) {
-        if (n.charAt(0) === '~') { window.__ktFamily = true; n = n.slice(1); }
+        if (n.charAt(0) === '~') { window.__ktFamily = true; window.__ktSide = window.__ktSide || 'nhatrai'; n = n.slice(1); }
         window.__ktGuestName = n;
       }
     }
@@ -221,7 +224,9 @@ class Component extends DCLogic {
       const guestHidden = document.getElementById('guestHidden');
       if (guestHidden) guestHidden.value = gParts.join(', ');
       const ENDPOINT = window.__ktFamily
-        ? 'https://script.google.com/macros/s/AKfycbwevSctkwLPPRI2dOOy_gX_IoOaZID9e99HqM3t28na4dBP_c2js2XWWTtnNOHB-yC_/exec'
+        ? (window.__ktSide === 'nhagai'
+          ? 'https://script.google.com/macros/s/AKfycbzPSxDK6nVELUnjUX-7igG2MxpRz4mu4f1Nd-kXSNBU21Tysl1dKrKBUrgqsm7Dkl7jMQ/exec'
+          : 'https://script.google.com/macros/s/AKfycbwevSctkwLPPRI2dOOy_gX_IoOaZID9e99HqM3t28na4dBP_c2js2XWWTtnNOHB-yC_/exec')
         : 'https://script.google.com/macros/s/AKfycbyAN47OdTGhQJ0cchLq84ZWLXYRqQL36_UOOW3KK52KjOvu48YzZW9k6eg0VGX6KU58/exec';
       const data = new URLSearchParams(new FormData(rsvpForm));
       if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
