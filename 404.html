@@ -2,9 +2,9 @@
 <html><head><meta charset="utf-8"><title>Khoa &amp; Thi</title>
 <script>
   var path = location.pathname.replace(/^\/+|\/+$/g, '');
-  var m = path.match(/^(parents|nhatrai|nhagai)(\/|$)/);
-  var side = m ? (m[1] === 'nhagai' ? 'nhagai' : 'nhatrai') : '';
-  var slug = path.replace(/^(parents|nhatrai|nhagai)\/?/, '');
+  var m = path.match(/^(parents|nhatrai|nhagai|nt|ng)(\/|$)/);
+  var side = m ? ((m[1] === 'nhagai' || m[1] === 'ng') ? 'ng' : 'nt') : '';
+  var slug = path.replace(/^(parents|nhatrai|nhagai|nt|ng)\/?/, '');
   if (side && slug === 'links' && m[1] !== 'parents') { location.replace('/' + side + '/links.html'); }
   else {
     var q = [];

@@ -2,21 +2,21 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)(parents|nhatrai|nhagai)(\/|$)/);var d=m?m[1]:(/[?&]f=(1|nhatrai|nhagai)(&|$)/.test(location.search)?p.replace(/[^\/]*$/,''):null);if(d)document.write('<base href="'+d+'">');})();</script>
+<script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)(parents|nhatrai|nhagai|nt|ng)(\/|$)/);var d=m?m[1]:(/[?&]f=(1|nhatrai|nhagai|nt|ng)(&|$)/.test(location.search)?p.replace(/[^\/]*$/,''):null);if(d)document.write('<base href="'+d+'">');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 (function () {
   try {
     var p = new URLSearchParams(location.search);
     var path = location.pathname.replace(/^\/+|\/+$/g, '').replace(/^index\.html$/, '');
-    var fm = path.match(/^(parents|nhatrai|nhagai)(\/|$)/);
-    if (fm) { window.__ktFamily = true; window.__ktSide = fm[1] === 'nhagai' ? 'nhagai' : 'nhatrai'; path = path.replace(/^(parents|nhatrai|nhagai)\/?/, ''); }
+    var fm = path.match(/^(parents|nhatrai|nhagai|nt|ng)(\/|$)/);
+    if (fm) { window.__ktFamily = true; window.__ktSide = (fm[1] === 'nhagai' || fm[1] === 'ng') ? 'nhagai' : 'nhatrai'; path = path.replace(/^(parents|nhatrai|nhagai|nt|ng)\/?/, ''); }
     var slug = p.get('g') || path;
     window.__ktSlug = slug || '';
     var fq = p.get('f');
-    if (fq === '1' || fq === 'nhatrai') { window.__ktFamily = true; window.__ktSide = 'nhatrai'; }
-    if (fq === 'nhagai') { window.__ktFamily = true; window.__ktSide = 'nhagai'; }
-    if (window.__ktFamily) { try { history.replaceState(null, '', '/' + window.__ktSide + (slug ? '/' + slug : '') + location.hash); } catch (_) {} }
+    if (fq === '1' || fq === 'nhatrai' || fq === 'nt') { window.__ktFamily = true; window.__ktSide = 'nhatrai'; }
+    if (fq === 'nhagai' || fq === 'ng') { window.__ktFamily = true; window.__ktSide = 'nhagai'; }
+    if (window.__ktFamily) { try { history.replaceState(null, '', '/' + (window.__ktSide === 'nhagai' ? 'ng' : 'nt') + (slug ? '/' + slug : '') + location.hash); } catch (_) {} }
     if (slug) {
       var b = slug.replace(/-/g, '+').replace(/_/g, '/'); while (b.length % 4) b += '=';
       var n = decodeURIComponent(escape(atob(b)));
