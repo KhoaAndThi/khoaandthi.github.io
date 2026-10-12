@@ -2,7 +2,7 @@
 <html lang="vi"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Link khách Nhà Trai · Khoa &amp; Thi</title>
+<title>Link khách Nhà Gái · Khoa &amp; Thi</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 body{margin:0;background:#f3ede2;color:#3a2417;font-family:'Cormorant Garamond',serif;}
@@ -18,7 +18,7 @@ a,a:hover{color:#5C2018;}
 <body>
 <div style="max-width:880px;margin:0 auto;padding:48px 24px 80px;">
   <div class="lbl" style="font-size:13px;letter-spacing:.24em;color:#5C2018;">Khoa &amp; Thi</div>
-  <h1 style="font-weight:500;font-size:40px;margin:8px 0 6px;">Tạo link khách Nhà Trai</h1>
+  <h1 style="font-weight:500;font-size:40px;margin:8px 0 6px;">Tạo link khách Nhà Gái</h1>
   <p style="font-size:18px;margin:0 0 28px;opacity:.8;">Mỗi dòng một tên. Link mở thiệp bản tiếng Việt và điền sẵn tên khách vào phiếu xác nhận.</p>
   <div style="display:grid;gap:16px;">
     <label style="display:grid;gap:8px;"><span class="lbl">Tên khách</span>
@@ -34,13 +34,13 @@ a,a:hover{color:#5C2018;}
 <script>
 var base = location.origin;
 var ta = document.getElementById('names'), list = document.getElementById('list');
-ta.value = localStorage.getItem('ktGL_names_nhatrai') || '';
+ta.value = localStorage.getItem('ktGL_names_nhagai') || '';
 function enc(s){ return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
-function rows(){ return ta.value.split('\n').map(function(n){return n.trim();}).filter(Boolean).map(function(n){ return { name:n, url: base + '/nhatrai/' + enc(n) }; }); }
+function rows(){ return ta.value.split('\n').map(function(n){return n.trim();}).filter(Boolean).map(function(n){ return { name:n, url: base + '/ng/' + enc(n) }; }); }
 function esc(s){ return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
 function copy(t, btn, lbl){ navigator.clipboard.writeText(t).then(function(){ btn.textContent='Đã chép'; setTimeout(function(){ btn.textContent=lbl; },1400); }); }
 function render(){
-  localStorage.setItem('ktGL_names_nhatrai', ta.value);
+  localStorage.setItem('ktGL_names_nhagai', ta.value);
   var r = rows();
   document.getElementById('count').textContent = r.length + ' link';
   list.innerHTML = r.map(function(x,i){ return '<div class="row"><div>'+esc(x.name)+'</div><a href="'+x.url+'" target="_blank">'+x.url+'</a><button class="cp" data-i="'+i+'">Chép</button></div>'; }).join('');
@@ -50,7 +50,7 @@ ta.addEventListener('input', render);
 document.getElementById('copyAll').onclick = function(){ copy(rows().map(function(r){return r.name+'\t'+r.url;}).join('\n'), this, 'Sao chép tất cả'); };
 document.getElementById('csv').onclick = function(){
   var d = '\ufeffTên,Link\n' + rows().map(function(r){ return '"'+r.name.replace(/"/g,'""')+'",'+r.url; }).join('\n');
-  var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([d],{type:'text/csv'})); a.download='link-khach-nhatrai.csv'; a.click();
+  var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([d],{type:'text/csv'})); a.download='link-khach-nhagai.csv'; a.click();
 };
 render();
 </script>
