@@ -47,7 +47,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
 <style>
-  html, body { margin: 0; padding: 0; overflow: hidden; background: #eaf1ee; }
+  /* FIX: overscroll-behavior stops rubber-band / pull-to-refresh fighting the scroll */
+  html, body { margin: 0; padding: 0; overflow: hidden; background: #eaf1ee; overscroll-behavior-y: none; }
   * { box-sizing: border-box; }
   a, a:hover { color: #78350f; }
   @media (max-aspect-ratio: 1/1) {
@@ -82,12 +83,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </helmet>
-<div id="paper" style="position:fixed;inset:0;z-index:0;background-color:#e9e2cc;background-image:url('./assets/bg-screens.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;"></div>
+<!-- FIX: sized to the LARGE viewport (lvh) instead of inset:0, so it never resizes/rescales when the URL bar hides -->
+<div id="paper" style="position:fixed;top:0;left:0;right:0;height:100vh;height:100lvh;z-index:0;background-color:#e9e2cc;background-image:url('./assets/bg-screens.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;"></div>
 <div id="scene" style="position:fixed;inset:0;z-index:1;opacity:0;">
   <div id="webgl" style="position:absolute;inset:0;"></div>
   <div id="css3d" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;"></div>
 </div>
-<div id="vignette" style="position:fixed;inset:0;z-index:2;pointer-events:none;box-shadow:inset 0 0 260px 50px rgba(120,95,50,0.16), inset 0 0 70px 0 rgba(255,251,240,0.45);"></div>
+<!-- FIX: same lvh sizing as #paper -->
+<div id="vignette" style="position:fixed;top:0;left:0;right:0;height:100vh;height:100lvh;z-index:2;pointer-events:none;box-shadow:inset 0 0 260px 50px rgba(120,95,50,0.16), inset 0 0 70px 0 rgba(255,251,240,0.45);"></div>
 <div id="frame" style="position:fixed;inset:0;z-index:3;pointer-events:none;background:url(./assets/frame.png) center center / cover no-repeat;opacity:0;transition:opacity 1.6s ease;"></div>
 <div id="progress" style="position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:20;width:1px;height:120px;background:rgba(41,37,36,0.16);opacity:0;pointer-events:none;"><div id="progressFill" style="position:absolute;top:0;left:0;width:100%;height:0%;background:#78350f;"></div></div>
 <div id="hint" style="position:fixed;left:0;right:0;bottom:26px;z-index:20;display:flex;flex-direction:column;align-items:center;gap:12px;color:#3a2417;font-family:'Cinzel',serif;letter-spacing:0.34em;text-transform:uppercase;font-size:11px;opacity:0;pointer-events:none;"><span style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid rgba(92,32,24,0.45);color:#5C2018;animation:scrollBob 1.8s ease-in-out infinite;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span><span id="hintLbl" style="color">Scroll to explore</span></div>
@@ -420,8 +423,9 @@ class Component extends DCLogic {
       const dict = store && store[comp._lang];
       if (!dict) return;
       const panels = comp._mobilePanelHTML(dict, comp._lang);
+      // FIX: 100svh (small viewport) is stable — 100dvh resized every section when the URL bar hid/showed, causing jumps
       page.innerHTML = panels.map(function (h) {
-        return '<section style="min-height:100vh;min-height:100dvh;box-sizing:border-box;padding:6vh 22px;display:flex;align-items:center;justify-content:center;">' + h + '</section>';
+        return '<section style="min-height:100vh;min-height:100svh;box-sizing:border-box;padding:6vh 22px;display:flex;align-items:center;justify-content:center;">' + h + '</section>';
       }).join('');
     };
     comp._fillScreens = function () { comp._renderMobile(); };
@@ -457,6 +461,8 @@ class Component extends DCLogic {
     const THREE = window.THREE, gsap = window.gsap, ST = window.ScrollTrigger;
     const comp = this;
     gsap.registerPlugin(ST);
+    // FIX: don't recalculate scroll positions when only the mobile URL bar shows/hides (landscape phones use this path)
+    ST.config({ ignoreMobileResize: true });
     const wgl = document.getElementById('webgl');
     const c3d = document.getElementById('css3d');
     if (!wgl || !THREE.CSS3DRenderer) return;
@@ -787,7 +793,12 @@ class Component extends DCLogic {
       buildJourney();
     }
     let _wasMobile = aspect < 1;
+    // FIX: remember width so height-only resizes (URL bar show/hide) on touch devices are ignored
+    let _lastW = window.innerWidth;
     function onResize() {
+      const isTouch = window.matchMedia('(pointer: coarse)').matches;
+      if (isTouch && window.innerWidth === _lastW) return; // URL bar show/hide only — skip
+      _lastW = window.innerWidth;
       W = window.innerWidth || W; H = window.innerHeight || H; aspect = (W > 0 && H > 0) ? W / H : aspect;
       camera.aspect = aspect; camera.updateProjectionMatrix();
       renderer.setSize(W, H); css3d.setSize(W, H);
