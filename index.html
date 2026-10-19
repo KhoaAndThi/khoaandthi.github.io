@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="kt-build" content="simple-scroll-4">
 <script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)(?:simple\/)?(parents|nhatrai|nhagai|nt2|ng2|nt|ng)(\/|$)/);var d=m?m[1]:(/[?&]f=(1|nhatrai|nhagai|nt2|ng2|nt|ng)(&|$)/.test(location.search)?p.replace(/[^\/]*$/,''):null);if(d)document.write('<base href="'+d+'">');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
@@ -32,7 +33,7 @@
     }
   } catch (_) {}
   if (window.__ktFamily) document.write('<style>#langPill{display:none !important;}</style>');
-  if (window.__ktSimple) document.write('<style>#posterDesktop,#posterMobile,#curtainVideoDesktop,#curtainVideoMobile,#introBadge{display:none !important;}#introOverlay{opacity:1 !important;pointer-events:auto !important;}html,body{overflow-x:hidden !important;overflow-y:auto !important;height:auto !important;}#intro{cursor:default !important;position:relative !important;inset:auto !important;height:auto !important;min-height:100vh;min-height:100svh;overflow:visible !important;background:transparent !important;}#introOverlay{position:relative !important;inset:auto !important;min-height:100vh;min-height:100svh;padding:56px 24px !important;}</style>');
+  if (window.__ktSimple) document.write('<style>#posterDesktop,#posterMobile,#curtainVideoDesktop,#curtainVideoMobile,#introBadge{display:none !important;}#introOverlay{opacity:1 !important;pointer-events:auto !important;}html{overflow-x:hidden !important;overflow-y:auto !important;height:auto !important;}body{overflow:visible !important;height:auto !important;}#intro{cursor:default !important;position:relative !important;inset:auto !important;height:auto !important;min-height:100vh;min-height:100svh;overflow:visible !important;background:transparent !important;}#introOverlay{position:relative !important;inset:auto !important;min-height:100vh;min-height:100svh;padding:56px 24px !important;}</style>');
 })();
 </script>
 <script src="./support.js"></script>
@@ -96,7 +97,7 @@
 <div id="vignette" style="position:fixed;top:0;left:0;right:0;height:100vh;height:100lvh;z-index:2;pointer-events:none;box-shadow:inset 0 0 260px 50px rgba(120,95,50,0.16), inset 0 0 70px 0 rgba(255,251,240,0.45);"></div>
 <div id="frame" style="position:fixed;inset:0;z-index:3;pointer-events:none;background:url(./assets/frame.png) center center / cover no-repeat;opacity:0;transition:opacity 1.6s ease;"></div>
 <div id="progress" style="position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:20;width:1px;height:120px;background:rgba(41,37,36,0.16);opacity:0;pointer-events:none;"><div id="progressFill" style="position:absolute;top:0;left:0;width:100%;height:0%;background:#78350f;"></div></div>
-<div id="hint" style="position:fixed;left:0;right:0;bottom:26px;z-index:20;display:flex;flex-direction:column;align-items:center;gap:12px;color:#a8a29e;font-family:'Cinzel',serif;letter-spacing:0.34em;text-transform:uppercase;font-size:11px;opacity:0;pointer-events:none;"><span style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid #3a2417;color:#3a2417;animation:scrollBob 1.8s ease-in-out infinite;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span><span id="hintLbl" style="color:#3a2417;font-weight:600;">Scroll to explore</span></div>
+<div id="hint" style="position:fixed;right:22px;bottom:22px;z-index:20;display:flex;flex-direction:column;align-items:center;gap:8px;color:#a8a29e;font-family:'Cinzel',serif;letter-spacing:0.34em;text-transform:uppercase;font-size:11px;opacity:0;pointer-events:none;"><span style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid #3a2417;color:#3a2417;animation:scrollBob 1.8s ease-in-out infinite;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span><span id="hintLbl" style="color:#3a2417;font-weight:600;">Scroll to explore</span></div>
 <div id="langPill" style="position:fixed;top:20px;right:20px;z-index:150;display:flex;align-items:center;gap:0;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.12em;background:#f2ece1;border-radius:999px;padding:3px;box-shadow:inset 0 1px 3px rgba(58,44,24,0.18);"><button id="langEN" style="border:none;background:#4a2420;color:#f3ede2;padding:6px 13px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:inherit;border-radius:999px;transition:background .25s ease,color .25s ease,box-shadow .25s ease;box-shadow:0 2px 6px rgba(40,20,16,0.28);">EN</button><button id="langVN" style="border:none;background:transparent;color:#4a2420;padding:6px 13px;cursor:pointer;font-family:inherit;font-size:inherit;letter-spacing:inherit;border-radius:999px;transition:background .25s ease,color .25s ease,box-shadow .25s ease;box-shadow:none;">VN</button></div>
 
 <div id="intro" style="position:fixed;inset:0;z-index:100;overflow:hidden;background:#f3ede2;cursor:pointer;">
@@ -972,6 +973,29 @@ class Component extends DCLogic {
   n.textContent = window.__ktIntroName;
   w.style.display = 'flex';
   var b = document.getElementById('enterBtn'); if (b) b.style.marginTop = '30px';
+})();
+</script>
+<script>
+(function () {
+  if (!window.__ktSimple) return;
+  var unlock = function () {
+    document.documentElement.style.setProperty('overflow-y', 'auto', 'important');
+    document.documentElement.style.setProperty('height', 'auto', 'important');
+    document.body.style.setProperty('overflow', 'visible', 'important');
+    document.body.style.setProperty('height', 'auto', 'important');
+  };
+  unlock(); setTimeout(unlock, 500); setTimeout(unlock, 2000);
+  var se = function () { return document.scrollingElement || document.documentElement; };
+  window.addEventListener('wheel', function (e) {
+    var el = se(), before = el.scrollTop;
+    requestAnimationFrame(function () { if (el.scrollTop === before && !e.defaultPrevented) el.scrollTop = before + e.deltaY; });
+  }, { passive: true });
+  window.addEventListener('keydown', function (e) {
+    var k = { ArrowDown: 60, ArrowUp: -60, PageDown: innerHeight * 0.9, PageUp: -innerHeight * 0.9, ' ': innerHeight * 0.9 }[e.key];
+    if (k === undefined || /INPUT|TEXTAREA/.test((e.target || {}).tagName || '')) return;
+    var el = se(), before = el.scrollTop;
+    requestAnimationFrame(function () { if (el.scrollTop === before) el.scrollTop = before + k; });
+  });
 })();
 </script>
 </body>
