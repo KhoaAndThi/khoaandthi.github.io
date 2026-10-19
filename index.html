@@ -998,5 +998,19 @@ class Component extends DCLogic {
   });
 })();
 </script>
+<script>
+(function () {
+  var hint = document.getElementById('hint'); if (!hint) return;
+  hint.style.transition = 'opacity .4s ease';
+  window.addEventListener('scroll', function () {
+    requestAnimationFrame(function () {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var p = max > 0 ? window.scrollY / max : 0;
+      if (p > 0.9 || parseFloat(hint.style.opacity || '0') === 0) return;
+      hint.style.opacity = window.scrollY > 10 ? '0.5' : '1';
+    });
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>
