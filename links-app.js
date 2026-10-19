@@ -71,7 +71,7 @@
   function message(it) {
     var u = url(it);
     return VI
-      ? 'Trân trọng kính mời ' + it.name + '\nBấm vào link sau đây để mở thiệp mời:\n' + u
+      ? 'Trân trọng kính mời ' + it.name + ' đến dự tiệc lễ thành hôn của hai con chúng tôi cùng gia đình.\nBấm vào link sau đây để mở thiệp mời:\n' + u
       : 'Dear ' + it.name + ',\nYou are warmly invited to our wedding. Tap the link below to open your invitation:\n' + u;
   }
   function url(it) { return location.origin + C.prefix + enc(it.name + (C.dual && it.inside ? '||' + it.inside : '')); }
