@@ -33,7 +33,7 @@
     }
   } catch (_) {}
   if (window.__ktFamily) document.write('<style>#langPill,#lblMarried{display:none !important;}</style>');
-  if (window.__ktSimple) document.write('<style>#posterDesktop,#posterMobile,#curtainVideoDesktop,#curtainVideoMobile,#introBadge{display:none !important;}#introOverlay{opacity:1 !important;pointer-events:auto !important;}#introNames{display:none !important;}#introLogo{display:block !important;}html{overflow-x:hidden !important;overflow-y:auto !important;height:auto !important;}body{overflow:visible !important;height:auto !important;}#intro{cursor:default !important;position:relative !important;inset:auto !important;height:auto !important;min-height:100vh;min-height:100svh;overflow:visible !important;background:transparent !important;}#introOverlay{position:relative !important;inset:auto !important;min-height:100vh;min-height:100svh;padding:56px 24px !important;}</style>');
+  if (window.__ktSimple) document.write('<style>#posterDesktop,#posterMobile,#curtainVideoDesktop,#curtainVideoMobile,#introBadge{display:none !important;}#introOverlay{opacity:1 !important;pointer-events:auto !important;}#introLogo{display:block !important;}#introNames{order:2;margin-top:14px;}html{overflow-x:hidden !important;overflow-y:auto !important;height:auto !important;}body{overflow:visible !important;height:auto !important;}#intro{cursor:default !important;position:relative !important;inset:auto !important;height:auto !important;min-height:100vh;min-height:100svh;overflow:visible !important;background:transparent !important;}#introOverlay{position:relative !important;inset:auto !important;min-height:100vh;min-height:100svh;padding:56px 24px !important;}</style>');
 })();
 </script>
 <script src="./support.js"></script>
@@ -114,7 +114,7 @@
   <div id="introOverlay" style="position:absolute;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;opacity:0;transition:opacity 1s ease;pointer-events:none;background:radial-gradient(ellipse 62% 58% at 50% 50%, rgba(247,242,232,0.92) 0%, rgba(247,242,232,0.7) 45%, rgba(247,242,232,0) 78%);">
     <img src="./assets/intro-photo.png" alt="Khoa and Thi" style="width:min(300px,62vw);height:auto;margin:0 0 16px;user-select:none;pointer-events:none;">
     <div id="lblMarried" style="font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;font-size:11px;color:#5C2018;margin-bottom:10px;">We're Getting Married</div>
-    <div id="introNames" style="font-family:'Pinyon Script',cursive;color:#5C2018;font-size:clamp(46px,10vw,112px);line-height:1.02;">Khoa <span style="font-size:0.7em;">&amp;</span> Thi</div>
+    <div id="introNames" style="font-family:'Pinyon Script',cursive;color:#5C2018;font-size:clamp(38px,8.5vw,96px);line-height:1.05;text-wrap:balance;">Gia Khoa <span style="font-size:0.7em;">&amp;</span> Linh Thi</div>
     <img id="introLogo" src="./assets/kt-logo.png" alt="Khoa &amp; Thi" style="display:none;width:min(150px,36vw);height:auto;margin:4px auto 0;user-select:none;pointer-events:none;">
     <div style="font-family:'Cormorant Garamond',serif;letter-spacing:0.22em;font-weight:600;font-size:clamp(20px,3vw,30px);color:#5C2018;margin-top:22px;">11 . 11 . 2026</div>
     <div id="introInvitee" style="display:none;flex-direction:column;align-items:center;gap:8px;width:100%;margin-top:30px;color:#5C2018;text-align:center;"><div style="font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;font-size:11px;">Trân trọng kính mời</div><div id="introInviteeName" style="display:block;width:100%;font-family:'Pinyon Script',cursive;font-size:clamp(34px,8vw,52px);line-height:1.15;"></div></div>
@@ -968,8 +968,11 @@ class Component extends DCLogic {
   if (!window.__ktFamily) return;
   var ng = window.__ktSide === 'nhagai';
   var el = document.getElementById('introNames');
+  if (!el) { var self = arguments.callee; return setTimeout(self, 100); }
   if (el) { el.innerHTML = ng ? 'Linh Thi <span style="font-size:0.7em;">&amp;</span> Gia Khoa' : 'Gia Khoa <span style="font-size:0.7em;">&amp;</span> Linh Thi'; el.style.fontSize = 'clamp(38px,8.5vw,96px)'; el.style.textWrap = 'balance'; }
   var img = document.querySelector('#introOverlay img'); if (img) img.alt = ng ? 'Linh Thi and Gia Khoa' : 'Gia Khoa and Linh Thi';
+  var logo = document.getElementById('introLogo');
+  if (window.__ktSimple && logo && el.parentNode) { el.parentNode.insertBefore(logo, el); el.style.marginTop = '14px'; }
 })();
 </script>
 <script>
