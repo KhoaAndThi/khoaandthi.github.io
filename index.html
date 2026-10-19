@@ -397,10 +397,6 @@ class Component extends DCLogic {
       })(),
       delighted: f.delighted || 'Sự hiện diện của quý khách<br>là niềm vui và vinh hạnh của chúng tôi.'
     });
-    {
-      const cap = s => typeof s === 'string' ? s.replace(/(^|<br\s*\/?>|<\/span>)(\s*)(\p{Ll})/gu, (m, a, b, c) => a + b + c.toUpperCase()) : s;
-      ['invite', 'at', 'delighted', 'address', 'confirm', 'celebration', 'whatToWear', 'rsvpHere'].forEach(k => { out[k] = cap(out[k]); });
-    }
     return out;
   }
 
