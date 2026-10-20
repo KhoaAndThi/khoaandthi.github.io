@@ -80,6 +80,7 @@
   .kt-dot { width:6px; height:6px; border-radius:50%; border:none; padding:0; cursor:pointer; background:#d6d3d1; transition:all .3s ease; }
   #openBtn:hover { border-color:rgba(41,37,36,0.4); background:#fbf8f1; box-shadow:0 4px 14px rgba(28,22,16,0.1); }
   #enterBtn:hover { background:#5C2018; color:#f3ede2; border-color:#5C2018; }
+  #rsvpForm input::placeholder, #rsvpForm textarea::placeholder { color: rgba(58,36,23,0.55); }
   .rsvp-opt:has(input:checked) { background:#5C2018; color:#f3ede2; border-color:#5C2018; }
   video::-webkit-media-controls, video::-webkit-media-controls-panel, video::-webkit-media-controls-start-playback-button, video::-webkit-media-controls-overlay-play-button { display: none !important; -webkit-appearance: none !important; }
   video { pointer-events: none; }
@@ -124,31 +125,31 @@
 <div id="rsvpModal" style="position:fixed;inset:0;z-index:200;display:none;background:#f3ede2;overflow:auto;">
   <button id="rsvpClose" style="position:absolute;top:16px;right:20px;z-index:3;font-family:'Cinzel',serif;font-size:22px;line-height:1;color:#5C2018;background:rgba(251,248,241,0.9);border:1px solid rgba(92,32,24,0.3);border-radius:50%;width:48px;height:48px;cursor:pointer;">&#10005;</button>
   <div style="min-height:100%;display:flex;align-items:flex-start;justify-content:center;padding:64px 24px;">
-    <form id="rsvpForm" style="width:100%;max-width:560px;color:#5C2018;font-family:'Cormorant Garamond',serif;">
+    <form id="rsvpForm" style="width:100%;max-width:560px;color:#3a2417;font-family:'Cormorant Garamond',serif;font-weight:500;">
       <div style="text-align:center;font-family:'Pinyon Script',cursive;font-size:clamp(52px,13vw,84px);line-height:1.05;margin-bottom:10px;text-wrap:balance;">Will you join us?</div>
-      <div style="text-align:center;font-size:16px;letter-spacing:0.22em;text-transform:uppercase;opacity:0.7;margin-bottom:44px;">Kindly reply below</div>
-      <label style="display:block;font-size:14px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.75;margin-bottom:10px;">Họ và tên | Full name</label>
-      <input name="Họ và tên | Full name" type="text" required style="width:100%;font-family:'Cormorant Garamond',serif;font-size:22px;color:#5C2018;background:transparent;border:none;border-bottom:1px solid rgba(92,32,24,0.4);padding:10px 2px;margin-bottom:36px;outline:none;">
-      <div style="font-size:14px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.75;margin-bottom:14px;">Bạn sẽ tham dự chứ? | Will you be attending?</div>
+      <div style="text-align:center;font-size:16px;letter-spacing:0.22em;text-transform:uppercase;font-weight:600;margin-bottom:44px;">Kindly reply below</div>
+      <label style="display:block;font-size:14px;letter-spacing:0.2em;text-transform:uppercase;font-weight:700;margin-bottom:10px;">Họ và tên | Full name</label>
+      <input name="Họ và tên | Full name" type="text" required style="width:100%;font-family:'Cormorant Garamond',serif;font-size:22px;color:#3a2417;background:transparent;border:none;border-bottom:1.5px solid rgba(58,36,23,0.7);font-weight:600;padding:10px 2px;margin-bottom:36px;outline:none;">
+      <div style="font-size:14px;letter-spacing:0.2em;text-transform:uppercase;font-weight:700;margin-bottom:14px;">Bạn sẽ tham dự chứ? | Will you be attending?</div>
       <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px;">
-        <label class="rsvp-opt" style="text-align:center;font-size:19px;letter-spacing:0.06em;border:1px solid rgba(92,32,24,0.4);padding:16px;cursor:pointer;"><input class="att-opt" type="checkbox" value="Có, chắc chắn rồi! | Yes, wouldn't miss it!" style="display:none;">Có, chắc chắn rồi! | Yes, wouldn't miss it!</label>
-        <label class="rsvp-opt" style="text-align:center;font-size:19px;letter-spacing:0.06em;border:1px solid rgba(92,32,24,0.4);padding:16px;cursor:pointer;"><input class="att-opt" type="checkbox" value="Rất tiếc, tôi không thể tham dự. | No, celebrating from afar." style="display:none;">Rất tiếc, tôi không thể tham dự. | No, celebrating from afar.</label>
+        <label class="rsvp-opt" style="text-align:center;font-size:19px;letter-spacing:0.06em;border:1.5px solid rgba(58,36,23,0.7);font-weight:600;padding:16px;cursor:pointer;"><input class="att-opt" type="checkbox" value="Có, chắc chắn rồi! | Yes, wouldn't miss it!" style="display:none;">Có, chắc chắn rồi! | Yes, wouldn't miss it!</label>
+        <label class="rsvp-opt" style="text-align:center;font-size:19px;letter-spacing:0.06em;border:1.5px solid rgba(58,36,23,0.7);font-weight:600;padding:16px;cursor:pointer;"><input class="att-opt" type="checkbox" value="Rất tiếc, tôi không thể tham dự. | No, celebrating from afar." style="display:none;">Rất tiếc, tôi không thể tham dự. | No, celebrating from afar.</label>
       </div>
       <input type="hidden" id="attHidden" name="Bạn sẽ tham dự chứ? | Will you be attending?">
       <div style="height:18px;"></div>
-      <label style="display:block;font-size:14px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.75;margin-bottom:14px;">Số người tham dự | Number of guests</label>
+      <label style="display:block;font-size:14px;letter-spacing:0.2em;text-transform:uppercase;font-weight:700;margin-bottom:14px;">Số người tham dự | Number of guests</label>
       <div style="display:flex;gap:12px;margin-bottom:18px;">
-        <label class="rsvp-opt" style="flex:1;text-align:center;font-size:19px;border:1px solid rgba(92,32,24,0.4);padding:16px;cursor:pointer;"><input class="guest-opt" type="checkbox" value="1" style="display:none;">1</label>
-        <label class="rsvp-opt" style="flex:1;text-align:center;font-size:19px;border:1px solid rgba(92,32,24,0.4);padding:16px;cursor:pointer;"><input class="guest-opt" type="checkbox" value="2" style="display:none;">2</label>
-        <label class="rsvp-opt" style="flex:1;text-align:center;font-size:19px;border:1px solid rgba(92,32,24,0.4);padding:16px;cursor:pointer;"><input id="guestOtherChk" class="guest-opt" type="checkbox" value="__other__" style="display:none;">Other</label>
+        <label class="rsvp-opt" style="flex:1;text-align:center;font-size:19px;border:1.5px solid rgba(58,36,23,0.7);font-weight:600;padding:16px;cursor:pointer;"><input class="guest-opt" type="checkbox" value="1" style="display:none;">1</label>
+        <label class="rsvp-opt" style="flex:1;text-align:center;font-size:19px;border:1.5px solid rgba(58,36,23,0.7);font-weight:600;padding:16px;cursor:pointer;"><input class="guest-opt" type="checkbox" value="2" style="display:none;">2</label>
+        <label class="rsvp-opt" style="flex:1;text-align:center;font-size:19px;border:1.5px solid rgba(58,36,23,0.7);font-weight:600;padding:16px;cursor:pointer;"><input id="guestOtherChk" class="guest-opt" type="checkbox" value="__other__" style="display:none;">Other</label>
       </div>
-      <input id="guestOtherText" type="text" placeholder="How many…" style="width:100%;display:none;font-family:'Cormorant Garamond',serif;font-size:22px;color:#5C2018;background:transparent;border:none;border-bottom:1px solid rgba(92,32,24,0.4);padding:10px 2px;margin-bottom:36px;outline:none;">
+      <input id="guestOtherText" type="text" placeholder="How many…" style="width:100%;display:none;font-family:'Cormorant Garamond',serif;font-size:22px;color:#3a2417;background:transparent;border:none;border-bottom:1.5px solid rgba(58,36,23,0.7);font-weight:600;padding:10px 2px;margin-bottom:36px;outline:none;">
       <input type="hidden" id="guestHidden" name="Số người tham dự | Number of guests">
       <div style="height:18px;"></div>
-      <label style="display:block;font-size:14px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.75;margin-bottom:10px;">Leave a note for the couple | Lời nhắn gửi đến cô dâu chú rể</label>
-      <textarea name="Leave a note for the couple | Lời nhắn gửi đến cô dâu chú rể" rows="3" style="width:100%;font-family:'Cormorant Garamond',serif;font-size:22px;color:#5C2018;background:transparent;border:1px solid rgba(92,32,24,0.4);padding:12px;margin-bottom:40px;outline:none;resize:vertical;"></textarea>
-      <button id="rsvpSubmit" type="submit" style="width:100%;font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:0.24em;text-transform:uppercase;color:#f3ede2;background:#5C2018;border:1px solid #5C2018;padding:20px;cursor:pointer;">Send RSVP</button>
-      <div id="rsvpMsg" style="text-align:center;font-size:20px;margin-top:24px;min-height:24px;"></div>
+      <label style="display:block;font-size:14px;letter-spacing:0.2em;text-transform:uppercase;font-weight:700;margin-bottom:10px;">Leave a note for the couple | Lời nhắn gửi đến cô dâu chú rể</label>
+      <textarea name="Leave a note for the couple | Lời nhắn gửi đến cô dâu chú rể" rows="3" style="width:100%;font-family:'Cormorant Garamond',serif;font-size:22px;color:#3a2417;background:transparent;border:1.5px solid rgba(58,36,23,0.7);font-weight:600;padding:12px;margin-bottom:40px;outline:none;resize:vertical;"></textarea>
+      <button id="rsvpSubmit" type="submit" style="width:100%;font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:0.24em;text-transform:uppercase;font-weight:700;color:#f3ede2;background:#5C2018;border:1px solid #5C2018;padding:20px;cursor:pointer;">Send RSVP</button>
+      <div id="rsvpMsg" style="text-align:center;font-size:20px;font-weight:600;margin-top:24px;min-height:24px;"></div>
     </form>
   </div>
 </div>
