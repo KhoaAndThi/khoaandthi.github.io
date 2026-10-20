@@ -1022,5 +1022,13 @@ class Component extends DCLogic {
   }, { passive: true });
 })();
 </script>
+<script>
+(function () {
+  if (!window.__ktSimple) return;
+  var st = document.createElement('style');
+  st.textContent = '@media (min-width: 768px) and (pointer: fine) { #mobilePage > section > *, #introOverlay > * { zoom: 0.78; } }';
+  document.head.appendChild(st);
+})();
+</script>
 </body>
 </html>
