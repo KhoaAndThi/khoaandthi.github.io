@@ -226,6 +226,15 @@ class Component extends DCLogic {
       e.preventDefault();
       const btn = document.getElementById('rsvpSubmit');
       const msg = document.getElementById('rsvpMsg');
+      const nameEl = rsvpForm.querySelector('input[name="Họ và tên | Full name"]');
+      if (nameEl && !nameEl.value.trim()) {
+        nameEl.value = '';
+        if (msg) msg.textContent = window.__ktFamily ? 'Vui lòng nhập họ và tên.' : 'Please enter your name.';
+        nameEl.style.borderBottomColor = '#7a2231';
+        nameEl.focus();
+        nameEl.addEventListener('input', function f() { nameEl.style.borderBottomColor = ''; if (msg) msg.textContent = ''; nameEl.removeEventListener('input', f); });
+        return;
+      }
       const parts = [...rsvpForm.querySelectorAll('.att-opt:checked')].map(c => c.value).filter(Boolean);
       const attHidden = document.getElementById('attHidden');
       if (attHidden) attHidden.value = parts.join(', ');
