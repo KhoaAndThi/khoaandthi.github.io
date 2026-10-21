@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="kt-build" content="simple-scroll-4">
+<meta name="kt-build" content="android-scroll-1">
 <script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)(?:simple\/)?(parents|nhatrai|nhagai|nt2|ng2|nt|ng)(\/|$)/);var d=m?m[1]:(/[?&]f=(1|nhatrai|nhagai|nt2|ng2|nt|ng)(&|$)/.test(location.search)?p.replace(/[^\/]*$/,''):null);if(d)document.write('<base href="'+d+'">');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
@@ -367,6 +367,7 @@ class Component extends DCLogic {
   }
 
   enterInvitation() {
+    { const it = document.getElementById('intro'); if (it && !window.__ktSimple && this.isMobile()) it.style.pointerEvents = 'none'; }
     if (window.__ktSimple) {
       if (this._openInvitation) this._openInvitation(); else this._introDone = true;
       setTimeout(() => {
@@ -472,8 +473,16 @@ class Component extends DCLogic {
     const openMobile = function () {
       if (comp._opened) return; comp._opened = true;
       clearInterval(comp._coverTimer);
-      document.documentElement.style.overflow = 'auto';
-      document.body.style.overflow = 'auto';
+      const de = document.documentElement, bd = document.body;
+      de.style.setProperty('overflow-x', 'hidden', 'important');
+      de.style.setProperty('overflow-y', 'auto', 'important');
+      de.style.setProperty('height', 'auto', 'important');
+      de.style.setProperty('touch-action', 'pan-y', 'important');
+      bd.style.setProperty('overflow', 'visible', 'important');
+      bd.style.setProperty('height', 'auto', 'important');
+      bd.style.setProperty('touch-action', 'pan-y', 'important');
+      page.style.touchAction = 'pan-y';
+      const wg = document.getElementById('webgl'); if (wg && wg.parentElement) { wg.parentElement.style.pointerEvents = 'none'; wg.parentElement.style.display = 'none'; }
       const frameEl = document.getElementById('frame'); if (frameEl) frameEl.style.display = 'none';
       page.style.opacity = '1';
       const progressWrap = document.getElementById('progress');
