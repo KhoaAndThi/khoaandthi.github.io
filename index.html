@@ -158,7 +158,7 @@
 class Component extends DCLogic {
   componentDidMount() {
     const self = this;
-    self._lang = window.__ktFamily ? 'vi' : ((localStorage.getItem('ktLang') === 'vi') ? 'vi' : 'en');
+    self._lang = window.__ktFamily ? 'vi' : ((localStorage.getItem('ktLang') === 'en') ? 'en' : 'vi');
     self._i18nFallback = {
       en: { clickToOpen: "Click to open", gettingMarried: "We're Getting Married", openBtn: "Open the Invitation", hint: "Scroll to explore", invite: "You are warmly invited<br>to join us on our wedding day", at: "at", celebration: "The Celebration", ev: { arrive: "Guests arrive", vows: "Vows ceremony", reception: "Evening reception", ceremony: "Wedding ceremony", party: "Party · DJ" }, whatToWear: "What to Wear", dressCode: "DRESS CODE", confirm: "Confirm your attendance", delighted: "We would be delighted to<br>celebrate this special day with you.", rsvpHere: "RSVP here" },
       vi: { clickToOpen: "Nhấn để mở", gettingMarried: "Chúng tôi sắp kết hôn", openBtn: "Mở thiệp mời", hint: "Cuộn để khám phá", invite: "trân trọng kính mời bạn<br>đến chung vui ngày cưới", at: "tại", celebration: "Lễ Thành Hôn", ev: { arrive: "Đón khách", vows: "Nghi lễ", reception: "Tiệc chiều", ceremony: "Lễ thành hôn", party: "Tiệc · DJ" }, whatToWear: "Trang phục", dressCode: "QUY ĐỊNH TRANG PHỤC", confirm: "Xác nhận tham dự", delighted: "Chúng tôi rất hân hạnh được đón tiếp bạn<br>trong ngày trọng đại này.", rsvpHere: "Phản hồi tại đây" }
