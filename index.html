@@ -439,7 +439,11 @@ class Component extends DCLogic {
       const f = dict.evFamily || {};
       return [['tl-reception.png', '17:00', f.reception || 'Đón Khách'], ['tl-ceremony.png', '18:00', f.ceremony || 'Lễ Thành Hôn'], ['tl-dinner.png', '18:30', f.dinner || 'Khai tiệc']];
     }
-    return [['tl-arrive.png', '15:00', dict.ev.arrive], ['tl-vows.png', '15:30', dict.ev.vows], ['tl-reception.png', '17:00', dict.ev.reception], ['tl-ceremony.png', '18:00', dict.ev.ceremony], ['tl-party.png', '20:00', dict.ev.party]].filter(e => !(window.__ktNoVows && (e[0] === 'tl-vows.png' || e[0] === 'tl-arrive.png')));
+    if (window.__ktNoVows) {
+      const dn = dict.ev.dinner || (/[À-ỹ]/.test(dict.ev.reception || '') ? 'Khai tiệc' : 'Dinner');
+      return [['tl-reception.png', '17:00', dict.ev.reception], ['tl-ceremony.png', '18:00', dict.ev.ceremony], ['tl-dinner.png', '18:30', dn], ['tl-party.png', '20:00', dict.ev.party]];
+    }
+    return [['tl-arrive.png', '15:00', dict.ev.arrive], ['tl-vows.png', '15:30', dict.ev.vows], ['tl-reception.png', '17:00', dict.ev.reception], ['tl-ceremony.png', '18:00', dict.ev.ceremony], ['tl-party.png', '20:00', dict.ev.party]];
   }
 
   _mobilePanelHTML(dict, lang) {
