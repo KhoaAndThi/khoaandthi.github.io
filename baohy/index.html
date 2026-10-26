@@ -2,6 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
+<script>document.write('<base href="' + location.href.split(/[?#]/)[0].replace(/[^\/]*$/, '') + '">');</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Báo hỷ · Gia Khoa &amp; Linh Thi</title>
 <meta property="og:title" content="Báo hỷ · Gia Khoa & Linh Thi">
@@ -13,6 +14,7 @@
   html, body { margin: 0; padding: 0; background: #eaf1ee; overscroll-behavior-y: none; }
   * { box-sizing: border-box; }
   a, a:hover { color: #5C2018; }
+  #bhOpen:hover { background: #5C2018; color: #f3ede2; }
   @media (min-aspect-ratio: 1/1) { .stk { display: none; } }
   @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 </style>
@@ -22,7 +24,18 @@
 
 <main style="position:relative;z-index:1;color:#3a2417;font-family:'Cormorant Garamond',serif;text-align:center;">
 
-  <section style="min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:4vh 22px;">
+  <section id="bhIntro" style="min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:6vh 22px;">
+    <div style="width:100%;max-width:520px;display:flex;flex-direction:column;align-items:center;">
+      <img src="../assets/kt-logo.png" alt="Gia Khoa &amp; Linh Thi" style="display:block;width:min(80px,14vw);height:auto;">
+      <div id="bhTo" style="display:none;flex-direction:column;align-items:center;gap:8px;width:100%;margin-top:34px;color:#5C2018;">
+        <div style="font-weight:600;letter-spacing:.28em;text-transform:uppercase;font-size:11px;">Trân trọng kính gửi</div>
+        <div id="bhName" style="font-family:'Pinyon Script',cursive;font-size:52px;line-height:1.15;text-wrap:balance;"></div>
+      </div>
+      <button id="bhOpen" type="button" style="margin-top:34px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:13px;letter-spacing:.24em;text-transform:uppercase;white-space:nowrap;color:#5C2018;background:transparent;border:1px solid #5C2018;padding:16px 34px;padding-left:calc(34px + .24em);cursor:pointer;transition:background .25s ease,color .25s ease;">Mở thiệp</button>
+    </div>
+  </section>
+
+  <section id="bhMain" style="min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:4vh 22px;">
     <div style="width:100%;max-width:560px;display:flex;flex-direction:column;align-items:center;">
       <img src="../assets/kt-logo.png" alt="Gia Khoa &amp; Linh Thi" style="display:block;width:min(84px,20vw,8vh);height:auto;">
 
@@ -55,6 +68,28 @@
 
 
 </main>
+<script>
+(function () {
+  var p = new URLSearchParams(location.search);
+  var slug = p.get('g') || location.pathname.replace(/^\/+|\/+$/g, '').replace(/^baohy\/?/, '').replace(/^index\.html$/, '');
+  if (p.get('g')) { try { history.replaceState(null, '', '/baohy/' + slug + location.hash); } catch (_) {} }
+  if (slug) {
+    try {
+      var b = slug.replace(/-/g, '+').replace(/_/g, '/'); while (b.length % 4) b += '=';
+      var n = decodeURIComponent(escape(atob(b)));
+      if (n && !/[\u0000-\u001f]/.test(n)) {
+        n = n.split('||')[0].replace(/^~/, '').trim();
+        document.getElementById('bhName').textContent = n;
+        document.getElementById('bhTo').style.display = 'flex';
+      }
+    } catch (_) {}
+  }
+  document.getElementById('bhOpen').addEventListener('click', function () {
+    var m = document.getElementById('bhMain');
+    window.scrollTo({ top: m.getBoundingClientRect().top + window.scrollY, behavior: 'smooth' });
+  });
+})();
+</script>
 
 </body>
 </html>

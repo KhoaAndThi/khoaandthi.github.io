@@ -70,6 +70,7 @@
   }
   function message(it) {
     var u = url(it);
+    if (C.msg) return C.msg.split('{name}').join(it.name).split('{url}').join(u);
     return VI
       ? 'Trân trọng kính mời ' + it.name + ' đến dự tiệc mừng lễ thành hôn của hai con chúng tôi.\nBấm vào link sau đây để mở thiệp mời:\n' + u
       : 'Dear ' + it.name + ',\nYou are warmly invited to our wedding. Tap the link below to open your invitation:\n' + u;

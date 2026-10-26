@@ -3,6 +3,10 @@
 <script>
 (function () {
   var path = location.pathname.replace(/^\/+|\/+$/g, '');
+  if (/^baohy(\/|$)/.test(path)) {
+    var bs = path.replace(/^baohy\/?/, '');
+    location.replace(bs === 'links' ? '/baohy/links.html' : '/baohy/' + (bs ? '?g=' + encodeURIComponent(bs) : '') + location.hash); return;
+  }
   var simple = false;
   if (/^simple\/(nt|ng)(\/|$)/.test(path)) { simple = true; path = path.replace(/^simple\//, ''); }
   else if (/^min(\/|$)/.test(path)) {
