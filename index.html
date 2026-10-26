@@ -249,6 +249,15 @@ class Component extends DCLogic {
       const gParts = [...rsvpForm.querySelectorAll('.guest-opt:checked')].map(c => c.value === '__other__' ? (guestOtherText && guestOtherText.value.trim()) : c.value).filter(Boolean);
       const guestHidden = document.getElementById('guestHidden');
       if (guestHidden) guestHidden.value = gParts.join(', ');
+      const declining = parts.length && parts.every(v => /không thể tham dự|celebrating from afar/i.test(v));
+      if (!declining && !gParts.length) {
+        const otherPicked = rsvpForm.querySelector('.guest-opt[value="__other__"]:checked');
+        if (msg) msg.textContent = otherPicked
+          ? (window.__ktFamily ? 'Vui lòng nhập số người tham dự.' : 'Please enter the number of guests.')
+          : (window.__ktFamily ? 'Vui lòng chọn số người tham dự.' : 'Please choose the number of guests.');
+        if (otherPicked && guestOtherText) guestOtherText.focus();
+        return;
+      }
       const ENDPOINT = window.__ktFamily
         ? (window.__ktSide === 'nhagai'
           ? 'https://script.google.com/macros/s/AKfycbzPSxDK6nVELUnjUX-7igG2MxpRz4mu4f1Nd-kXSNBU21Tysl1dKrKBUrgqsm7Dkl7jMQ/exec'
@@ -960,6 +969,7 @@ class Component extends DCLogic {
     window.__guestName = name;
     if (!window.__ktGuestName) { window.__ktGuestName = name; if (window.__ktRerender) window.__ktRerender(); }
     var fill = function () {
+      if (window.__ktSide === 'nhagai') return;
       var el = document.querySelector('input[name="Họ và tên | Full name"]');
       if (!el) return setTimeout(fill, 300);
       if (!el.value) el.value = name;
