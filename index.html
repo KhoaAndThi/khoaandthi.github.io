@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="kt-build" content="android-scroll-1">
-<script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)(?:simple\/)?(parents|nhatrai|nhagai|nt2|ng2|nt|ng)(\/|$)/)||p.match(/^(.*?\/)min(\/|$)/);var d=m?m[1]:(/[?&]f=(1|nhatrai|nhagai|nt2|ng2|nt|ng|s)(&|$)/.test(location.search)?p.replace(/[^\/]*$/,''):null);if(d)document.write('<base href="'+d+'">');})();</script>
+<script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)(?:simple\/)?(parents|nhatrai|nhagai|nt2|ng2|nt|ng)(\/|$)/)||p.match(/^(.*?\/)min(\/|$)/);var d=m?m[1]:(/[?&]f=(1|nhatrai|nhagai|nt2|ng2|nt|ng|s|sac)(&|$)/.test(location.search)?p.replace(/[^\/]*$/,''):null);if(d)document.write('<base href="'+d+'">');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 (function () {
@@ -11,7 +11,7 @@
     var p = new URLSearchParams(location.search);
     var path = location.pathname.replace(/^\/+|\/+$/g, '').replace(/^index\.html$/, '');
     if (/^simple\/(nt|ng)(\/|$)/.test(path)) { window.__ktSimple = true; path = path.replace(/^simple\//, ''); }
-    else if (/^min(\/|$)/.test(path)) { window.__ktSimple = true; window.__ktOrigSimple = true; path = path.replace(/^min\/?/, ''); }
+    else if (/^min(\/|$)/.test(path)) { window.__ktSimple = true; window.__ktOrigSimple = true; path = path.replace(/^min\/?/, ''); if (/^ac(\/|$)/.test(path)) { window.__ktAC = true; path = path.replace(/^ac\/?/, ''); } }
     var fm = path.match(/^(parents|nhatrai|nhagai|nt2|ng2|nt|ng)(\/|$)/);
     if (fm) { window.__ktFamily = true; window.__ktSide = /^(nhagai|ng2?)$/.test(fm[1]) ? 'nhagai' : 'nhatrai'; if (/2$/.test(fm[1])) window.__ktSimple = true; path = path.replace(/^(parents|nhatrai|nhagai|nt2|ng2|nt|ng)\/?/, ''); }
     var slug = p.get('g') || path;
@@ -20,9 +20,10 @@
     if (fq === '1' || fq === 'nhatrai' || fq === 'nt' || fq === 'nt2') { window.__ktFamily = true; window.__ktSide = 'nhatrai'; }
     if (fq === 'nhagai' || fq === 'ng' || fq === 'ng2') { window.__ktFamily = true; window.__ktSide = 'nhagai'; }
     if (fq === 'nt2' || fq === 'ng2') window.__ktSimple = true;
-    if (fq === 's') { window.__ktSimple = true; window.__ktOrigSimple = true; }
+    if (fq === 's' || fq === 'sac') { window.__ktSimple = true; window.__ktOrigSimple = true; }
+    if (fq === 'sac') window.__ktAC = true;
     window.__ktNoVows = !!window.__ktOrigSimple;
-    if (window.__ktOrigSimple) { try { history.replaceState(null, '', '/min' + (slug ? '/' + slug : '') + location.hash); } catch (_) {} }
+    if (window.__ktOrigSimple) { try { history.replaceState(null, '', '/min' + (window.__ktAC ? '/ac' : '') + (slug ? '/' + slug : '') + location.hash); } catch (_) {} }
     if (window.__ktFamily) { try { history.replaceState(null, '', (window.__ktSimple ? '/simple' : '') + '/' + (window.__ktSide === 'nhagai' ? 'ng' : 'nt') + (slug ? '/' + slug : '') + location.hash); } catch (_) {} }
     if (slug) {
       var b = slug.replace(/-/g, '+').replace(/_/g, '/'); while (b.length % 4) b += '=';
@@ -401,7 +402,10 @@ class Component extends DCLogic {
   }
 
   _famDict(dict) {
-    if (!window.__ktFamily) return dict;
+    if (!window.__ktFamily) {
+      if (window.__ktAC && dict && /kính mời/i.test(dict.invite || '')) return Object.assign({}, dict, { invite: 'Trân trọng kính mời anh chị<br>tới dự bữa tiệc mừng Lễ Thành Hôn cùng gia đình' });
+      return dict;
+    }
     const f = dict.family || {};
     const out = Object.assign({}, dict, {
       invite: (function () {
@@ -426,7 +430,7 @@ class Component extends DCLogic {
       const f = dict.evFamily || {};
       return [['tl-reception.png', '17:00', f.reception || 'Đón Khách'], ['tl-ceremony.png', '18:00', f.ceremony || 'Lễ Thành Hôn'], ['tl-dinner.png', '18:30', f.dinner || 'Khai tiệc']];
     }
-    return [['tl-arrive.png', '15:00', dict.ev.arrive], ['tl-vows.png', '15:30', dict.ev.vows], ['tl-reception.png', '17:00', dict.ev.reception], ['tl-ceremony.png', '18:00', dict.ev.ceremony], ['tl-party.png', '20:00', dict.ev.party]].filter(e => !(window.__ktNoVows && e[0] === 'tl-vows.png'));
+    return [['tl-arrive.png', '15:00', dict.ev.arrive], ['tl-vows.png', '15:30', dict.ev.vows], ['tl-reception.png', '17:00', dict.ev.reception], ['tl-ceremony.png', '18:00', dict.ev.ceremony], ['tl-party.png', '20:00', dict.ev.party]].filter(e => !(window.__ktNoVows && (e[0] === 'tl-vows.png' || e[0] === 'tl-arrive.png')));
   }
 
   _mobilePanelHTML(dict, lang) {
@@ -453,7 +457,7 @@ class Component extends DCLogic {
     const p1 = '<div style="text-align:center;color:' + NAVY + ';max-width:520px;margin:0 auto;"><div style="font-family:\'Pinyon Script\',cursive;font-size:' + TS + ';line-height:1.05;">' + dict.celebration + '</div><div style="font-family:\'Updock\',cursive;letter-spacing:0.02em;font-weight:400;font-size:clamp(32px,8.6vw,44px);margin:min(16px,2vh) 0 min(40px,4vh);">11 \u00b7 11 \u00b7 2026</div><div style="display:flex;flex-direction:column;gap:clamp(14px,2.6vh,28px);align-items:center;">' + rows + '</div></div>';
     const p2 = '<div style="text-align:center;color:' + NAVY + ';font-family:\'Cormorant Garamond\',serif;max-width:520px;margin:0 auto;"><div style="font-family:\'Pinyon Script\',cursive;font-size:' + TS + ';line-height:1.05;margin-bottom:min(22px,2.4vh);">' + dict.whatToWear + '</div><div style="display:flex;justify-content:center;margin-bottom:min(24px,2.6vh);"><img src="./assets/attire.png" alt="" style="width:min(260px,52vw,30vh);height:auto;object-fit:contain;"></div><div style="display:flex;flex-wrap:wrap;gap:min(20px,2.4vh) 20px;justify-content:center;">' + swatches + '</div>' + (window.__ktSF ? '' : '<div style="font-family:\'Cormorant Garamond\',serif;font-style:italic;font-weight:600;font-size:clamp(17px,4.6vw,22px);line-height:1.35;margin-top:min(26px,3vh);text-wrap:balance;">' + (dict.dressNote || (lang === 'vi' ? 'Xin vui lòng tránh trang phục màu trắng và màu be.' : 'Kindly avoid wearing white or beige.')) + '</div>') + '</div>';
     const p3 = '<div style="text-align:center;color:' + NAVY + ';font-family:\'Cormorant Garamond\',serif;max-width:520px;margin:0 auto;"><div style="font-family:\'Pinyon Script\',cursive;font-size:' + TS + ';line-height:1.05;">' + dict.confirm + '</div><div style="font-weight:400;font-size:clamp(19px,5.2vw,28px);line-height:1.4;margin-top:min(22px,2.4vh);">' + dict.delighted + '</div><div style="width:160px;height:1px;background:' + NAVY + ';opacity:.35;margin:min(30px,3.2vh) auto min(32px,3.4vh);"></div><button id="rsvpBtn" style="font-family:\'Cormorant Garamond\',serif;font-size:clamp(18px,5vw,26px);letter-spacing:.22em;text-transform:uppercase;color:' + NAVY + ';background:transparent;border:1px solid ' + NAVY + ';padding:18px 44px;padding-left:calc(44px + .22em);cursor:pointer;">' + dict.rsvpHere + '</button></div>';
-    return [p0, p1, p2, p3];
+    return window.__ktOrigSimple ? [p0, p1, p3] : [p0, p1, p2, p3];
   }
 
   initMobile() {

@@ -6,9 +6,10 @@
   var simple = false;
   if (/^simple\/(nt|ng)(\/|$)/.test(path)) { simple = true; path = path.replace(/^simple\//, ''); }
   else if (/^min(\/|$)/.test(path)) {
-    var s2 = path.replace(/^min\/?/, '');
-    if (s2 === 'links') { location.replace('/min/links.html'); return; }
-    location.replace('/?f=s' + (s2 ? '&g=' + encodeURIComponent(s2) : '') + location.hash); return;
+    var s2 = path.replace(/^min\/?/, ''), ac = false;
+    if (/^ac(\/|$)/.test(s2)) { ac = true; s2 = s2.replace(/^ac\/?/, ''); }
+    if (s2 === 'links') { location.replace('/min' + (ac ? '/ac' : '') + '/links.html'); return; }
+    location.replace('/?f=' + (ac ? 'sac' : 's') + (s2 ? '&g=' + encodeURIComponent(s2) : '') + location.hash); return;
   }
   var m = path.match(/^(parents|nhatrai|nhagai|nt2|ng2|nt|ng)(\/|$)/);
   var side = '';
