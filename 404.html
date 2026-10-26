@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html><head><meta charset="utf-8"><title>Khoa &amp; Thi</title>
 <script>
+(function () {
   var path = location.pathname.replace(/^\/+|\/+$/g, '');
   var simple = false;
   if (/^simple\/(nt|ng)(\/|$)/.test(path)) { simple = true; path = path.replace(/^simple\//, ''); }
+  else if (/^min(\/|$)/.test(path)) {
+    var s2 = path.replace(/^min\/?/, '');
+    if (s2 === 'links') { location.replace('/min/links.html'); return; }
+    location.replace('/?f=s' + (s2 ? '&g=' + encodeURIComponent(s2) : '') + location.hash); return;
+  }
   var m = path.match(/^(parents|nhatrai|nhagai|nt2|ng2|nt|ng)(\/|$)/);
   var side = '';
   if (m) { side = /^(nhagai|ng2?)$/.test(m[1]) ? 'ng' : 'nt'; if (/2$/.test(m[1])) simple = true; }
   var slug = path.replace(/^(parents|nhatrai|nhagai|nt2|ng2|nt|ng)\/?/, '');
-  if (side && slug === 'links' && m[1] !== 'parents') { location.replace((simple ? '/simple' : '') + '/' + side + '/links.html'); }
-  else {
-    var q = [];
-    if (side) q.push('f=' + side + (simple ? '2' : ''));
-    if (slug) q.push('g=' + encodeURIComponent(slug));
-    location.replace('/' + (q.length ? '?' + q.join('&') : '') + location.hash);
-  }
+  if (side && slug === 'links' && m[1] !== 'parents') { location.replace((simple ? '/simple' : '') + '/' + side + '/links.html'); return; }
+  var q = [];
+  if (side) q.push('f=' + side + (simple ? '2' : ''));
+  if (slug) q.push('g=' + encodeURIComponent(slug));
+  location.replace('/' + (q.length ? '?' + q.join('&') : '') + location.hash);
+})();
 </script></head><body></body></html>
