@@ -9,6 +9,11 @@
   }
   var simple = false;
   if (/^simple\/(nt|ng)(\/|$)/.test(path)) { simple = true; path = path.replace(/^simple\//, ''); }
+  else if (/^more\/ac(\/|$)/.test(path)) {
+    var s3 = path.replace(/^more\/ac\/?/, '');
+    if (s3 === 'links') { location.replace('/more/ac/links.html'); return; }
+    location.replace('/?f=mac' + (s3 ? '&g=' + encodeURIComponent(s3) : '') + location.hash); return;
+  }
   else if (/^min(\/|$)/.test(path)) {
     var s2 = path.replace(/^min\/?/, ''), ac = false;
     if (/^ac(\/|$)/.test(s2)) { ac = true; s2 = s2.replace(/^ac\/?/, ''); }
