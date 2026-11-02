@@ -15,10 +15,11 @@
     location.replace('/?f=mac' + (s3 ? '&g=' + encodeURIComponent(s3) : '') + location.hash); return;
   }
   else if (/^min(\/|$)/.test(path)) {
-    var s2 = path.replace(/^min\/?/, ''), ac = false;
+    var s2 = path.replace(/^min\/?/, ''), ac = false, anh = false;
     if (/^ac(\/|$)/.test(s2)) { ac = true; s2 = s2.replace(/^ac\/?/, ''); }
-    if (s2 === 'links') { location.replace('/min' + (ac ? '/ac' : '') + '/links.html'); return; }
-    location.replace('/?f=' + (ac ? 'sac' : 's') + (s2 ? '&g=' + encodeURIComponent(s2) : '') + location.hash); return;
+    else if (/^anh(\/|$)/.test(s2)) { anh = true; s2 = s2.replace(/^anh\/?/, ''); }
+    if (s2 === 'links') { location.replace('/min' + (anh ? '/anh' : (ac ? '/ac' : '')) + '/links.html'); return; }
+    location.replace('/?f=' + (anh ? 'sanh' : (ac ? 'sac' : 's')) + (s2 ? '&g=' + encodeURIComponent(s2) : '') + location.hash); return;
   }
   var m = path.match(/^(parents|nhatrai|nhagai|nt2|ng2|nt|ng)(\/|$)/);
   var side = '';

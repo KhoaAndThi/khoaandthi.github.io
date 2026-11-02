@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="kt-build" content="android-scroll-1">
-<script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)(?:simple\/)?(parents|nhatrai|nhagai|nt2|ng2|nt|ng)(\/|$)/)||p.match(/^(.*?\/)(?:min|more)(\/|$)/);var d=m?m[1]:(/[?&]f=(1|nhatrai|nhagai|nt2|ng2|nt|ng|s|sac|mac)(&|$)/.test(location.search)?p.replace(/[^\/]*$/,''):null);if(d)document.write('<base href="'+d+'">');})();</script>
+<script>(function(){var p=location.pathname,m=p.match(/^(.*?\/)(?:simple\/)?(parents|nhatrai|nhagai|nt2|ng2|nt|ng)(\/|$)/)||p.match(/^(.*?\/)(?:min|more)(\/|$)/);var d=m?m[1]:(/[?&]f=(1|nhatrai|nhagai|nt2|ng2|nt|ng|s|sac|sanh|mac)(&|$)/.test(location.search)?p.replace(/[^\/]*$/,''):null);if(d)document.write('<base href="'+d+'">');})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 (function () {
@@ -11,7 +11,7 @@
     var p = new URLSearchParams(location.search);
     var path = location.pathname.replace(/^\/+|\/+$/g, '').replace(/^index\.html$/, '');
     if (/^simple\/(nt|ng)(\/|$)/.test(path)) { window.__ktSimple = true; path = path.replace(/^simple\//, ''); }
-    else if (/^min(\/|$)/.test(path)) { window.__ktSimple = true; window.__ktOrigSimple = true; path = path.replace(/^min\/?/, ''); if (/^ac(\/|$)/.test(path)) { window.__ktAC = true; path = path.replace(/^ac\/?/, ''); } }
+    else if (/^min(\/|$)/.test(path)) { window.__ktSimple = true; window.__ktOrigSimple = true; path = path.replace(/^min\/?/, ''); if (/^ac(\/|$)/.test(path)) { window.__ktAC = true; path = path.replace(/^ac\/?/, ''); } else if (/^anh(\/|$)/.test(path)) { window.__ktAC = true; window.__ktAnh = true; path = path.replace(/^anh\/?/, ''); } }
     else if (/^more\/ac(\/|$)/.test(path)) { window.__ktSimple = true; window.__ktOrigSimple = true; window.__ktAC = true; window.__ktMore = true; path = path.replace(/^more\/ac\/?/, ''); }
     var fm = path.match(/^(parents|nhatrai|nhagai|nt2|ng2|nt|ng)(\/|$)/);
     if (fm) { window.__ktFamily = true; window.__ktSide = /^(nhagai|ng2?)$/.test(fm[1]) ? 'nhagai' : 'nhatrai'; if (/2$/.test(fm[1])) window.__ktSimple = true; path = path.replace(/^(parents|nhatrai|nhagai|nt2|ng2|nt|ng)\/?/, ''); }
@@ -23,9 +23,10 @@
     if (fq === 'nt2' || fq === 'ng2') window.__ktSimple = true;
     if (fq === 's' || fq === 'sac') { window.__ktSimple = true; window.__ktOrigSimple = true; }
     if (fq === 'sac') window.__ktAC = true;
+    if (fq === 'sanh') { window.__ktSimple = true; window.__ktOrigSimple = true; window.__ktAC = true; window.__ktAnh = true; }
     if (fq === 'mac') { window.__ktSimple = true; window.__ktOrigSimple = true; window.__ktAC = true; window.__ktMore = true; }
     window.__ktNoVows = !!window.__ktOrigSimple;
-    if (window.__ktOrigSimple) { try { history.replaceState(null, '', (window.__ktMore ? '/more/ac' : '/min' + (window.__ktAC ? '/ac' : '')) + (slug ? '/' + slug : '') + location.hash); } catch (_) {} }
+    if (window.__ktOrigSimple) { try { history.replaceState(null, '', (window.__ktMore ? '/more/ac' : '/min' + (window.__ktAnh ? '/anh' : (window.__ktAC ? '/ac' : ''))) + (slug ? '/' + slug : '') + location.hash); } catch (_) {} }
     if (window.__ktFamily) { try { history.replaceState(null, '', (window.__ktSimple ? '/simple' : '') + '/' + (window.__ktSide === 'nhagai' ? 'ng' : 'nt') + (slug ? '/' + slug : '') + location.hash); } catch (_) {} }
     if (slug) {
       var b = slug.replace(/-/g, '+').replace(/_/g, '/'); while (b.length % 4) b += '=';
@@ -415,6 +416,7 @@ class Component extends DCLogic {
   _famDict(dict) {
     if (!window.__ktFamily) {
       if (window.__ktMore && dict && /kính mời/i.test(dict.invite || '')) return Object.assign({}, dict, { invite: 'Trân trọng kính mời anh chị và các cháu<br>tới dự bữa tiệc mừng Lễ Thành Hôn cùng gia đình<span style="display:block;font-family:\'Pinyon Script\',cursive;font-size:1.7em;line-height:1.15;margin-top:.35em;">Linh Thi <span style="font-size:.7em;">&amp;</span> Gia Khoa</span>' });
+      if (window.__ktAnh && dict && /kính mời/i.test(dict.invite || '')) return Object.assign({}, dict, { invite: 'Trân trọng kính mời anh<br>tới dự bữa tiệc mừng Lễ Thành Hôn cùng gia đình' });
       if (window.__ktAC && dict && /kính mời/i.test(dict.invite || '')) return Object.assign({}, dict, { invite: 'Trân trọng kính mời anh chị<br>tới dự bữa tiệc mừng Lễ Thành Hôn cùng gia đình' });
       return dict;
     }
